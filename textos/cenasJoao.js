@@ -334,7 +334,7 @@ let cena11 = {
             imgPerson: "feliz"
         }
     ],
-    nextTela: "inicio",
+    nextTela: "final",
     jump: ""
 };
 
@@ -356,7 +356,7 @@ let cena12 = {
             imgPerson: "feliz"
         }
     ],
-    nextTela: "inicio",
+    nextTela: "final",
     jump: ""
 }
 

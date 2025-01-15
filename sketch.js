@@ -16,6 +16,8 @@ let imagemFundo;
 let mapImagePerson = {};
 let lastImagePerson = "";
 
+let pontuacao = 0;
+
 //Funcao que carrega os valores das variaveis
 function preload() {
     imagemFundo = loadImage("./img/bg_03.png");
@@ -41,6 +43,8 @@ function draw() {
         mostrarCena(currentCena);
     } else if (tela === "cenaMenu") {
         mostrarCenaMenu(currentMenu);
+    }else if (tela === "final") {
+        mostrarTelaFinal(); // Nova função para exibir a tela final
     }
 }
 
@@ -178,48 +182,80 @@ function mostrarCenaMenu(menu) {
     showMenu(menu);
 }
 
+function mostrarTelaFinal() {
+    background(imagemFundo); // Fundo bg_03.png
+
+    // Retângulo central para mostrar a pontuação
+    rectMode(CENTER);
+    fill(255, 200); // Cor branca semitransparente
+    rect(width / 2, height / 2, 400, 200, 20);
+
+    // Texto da pontuação
+    textSize(32);
+    fill(0); // Cor preta
+    textAlign(CENTER, CENTER);
+    text("Pontuação Final", width / 2, height / 2 - 40);
+    textSize(48);
+    text(`${pontuacao}`, width / 2, height / 2 + 20);
+
+    // Texto de reinício ou saída
+    textSize(24);
+    fill(100);
+    text("Clique para reiniciar", width / 2, height / 2 + 80);
+}
+
 function mousePressed() {
     if (tela === "inicio") {
         if (mouseX > width / 2 - 100 && mouseX < width / 2 + 100 &&
             mouseY > height / 2 + 25 && mouseY < height / 2 + 75) {
             tela = "cena";
             currentCena = cena1;
-            indiceTexto = 0
+            indiceTexto = 0;
         }
     } else if (tela === "cena") {
         if (mouseX > width - 175 && mouseX < width - 25 && mouseY > height - 70 && mouseY < height - 30) {
             indiceTexto++;
             if (indiceTexto >= currentCena.cenas.length) {
                 tela = currentCena.nextTela;
-
-                // console.log(tela, currentCena.jump);
-
-                // console.log("-", currentCena.jump, "-");
                 indiceTexto = 0;
 
                 if (tela === "cena") {
                     currentCena = mapCenas[currentCena.jump];
                 } else if (tela === "cenaMenu") {
                     currentMenu = mapMenus[currentCena.jump];
+                } else if (tela === "final") {
+                    // Nada a fazer, já está na tela final
                 }
             }
         }
     } else if (tela === "cenaMenu") {
         let selectedOption = -1;
+
         for (let i = 0; i < currentMenu.length; i++) {
-            if (mouseX > positionMenuBox[0] + i * (widthMenuBox[0] + 15) && mouseX < positionMenuBox[0] + i * (widthMenuBox[0] + 15) + widthMenuBox[0] &&
+            if (mouseX > positionMenuBox[0] + i * (widthMenuBox[0] + 15) &&
+                mouseX < positionMenuBox[0] + i * (widthMenuBox[0] + 15) + widthMenuBox[0] &&
                 mouseY > positionMenuBox[1] && mouseY < positionMenuBox[1] + widthMenuBox[1]) {
                 selectedOption = i;
             }
         }
 
-        tela = currentMenu[selectedOption].nextTela;
+        if (selectedOption !== -1) {
+            pontuacao += currentMenu[selectedOption].pontuacao;
+            tela = currentMenu[selectedOption].nextTela;
 
-
-        if (tela === "cena") {
-            currentCena = mapCenas[currentMenu[selectedOption].jump];
-        } else if (tela === "cenaMenu") {
-            currentMenu = mapMenus[currentMenu[selectedOption].jump];
+            if (tela === "cena") {
+                currentCena = mapCenas[currentMenu[selectedOption].jump];
+            } else if (tela === "cenaMenu") {
+                currentMenu = mapMenus[currentMenu[selectedOption].jump];
+            } else if (tela === "final") {
+                // Nada a fazer, já está na tela final
+            }
         }
+    } else if (tela === "final") {
+        // Reiniciar o jogo ao clicar na tela final
+        tela = "inicio";
+        pontuacao = 0; // Reinicia a pontuação
+        indiceTexto = 0;
+        currentCena = cena1; // Reinicia a primeira cena
     }
 }
