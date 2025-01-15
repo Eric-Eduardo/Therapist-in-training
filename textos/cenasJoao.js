@@ -13,16 +13,18 @@ function preloadJoao() {
     joao02 = loadImage('img/joao/joao_02.png');
     joao03 = loadImage('img/joao/joao_03.png');
     joao04 = loadImage('img/joao/joao_04.png');
+    joao05 = loadImage('img/joao/joao_05.png');
+    joao06 = loadImage('img/joao/joao_06.png');
+    joao07 = loadImage('img/joao/joao_07.png');
 
     mapImagePerson = {
         "neutro": joao01,
         "falando": joao02,
         "cabeça baixa": joao03,
         "preocupado": joao04,
-        "feliz": joao01, // falta desenhar
-        "falando feliz": joao02, // falta desenhar
-        "cabeça baixa calado": joao01 // falta desenhar
-
+        "feliz": joao07,
+        "falando feliz": joao06,
+        "cabeça baixa calado": joao05
     }
 }
 
