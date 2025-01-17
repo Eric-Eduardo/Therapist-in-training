@@ -111,8 +111,8 @@ function mostrarTelaInicial() {
     fill("white");
     text("Therapist in Training", width / 2, 102);
 
-    drawButton("Jogar", 517, 336, 186, 48, "#9F554B");
-    drawButton("Como jogar", 517, 420, 186, 48, "#9F554B");
+    drawButton("Jogar", 547, 336, 186, 48, "#9F554B");
+    drawButton("Como jogar", 547, 420, 186, 48, "#9F554B");
 }
 
 // Padroniza a criação da imagem referente aos pacientes
