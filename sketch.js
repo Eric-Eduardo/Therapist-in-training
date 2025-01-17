@@ -1,4 +1,4 @@
-let currentCena = cena1; // cena atual
+let currentCena = cena12; // cena atual
 let currentMenu = [];
 
 let positionTextBox = [100, 520]; // posição do texto da fala
@@ -9,24 +9,26 @@ let widthMenuBox = [255, 350];
 
 let wrappedText = [];
 
-let tela = "cena"; // Estado inicial da aplicação
+let tela = "selecaoFase"; // Estado inicial da aplicação
 let indiceTexto = 0; // Índice do texto atual
 //Imagens do jogo
 let imagemFundo;
 let mapImagePerson = {};
 let lastImagePerson = "";
-
+let buttonsTela = [];
 let pontuacao = 0;
 
 //Funcao que carrega os valores das variaveis
 function preload() {
     imagemFundo = loadImage("./img/bg_03.png");
+    imagemFundoEscura = loadImage("./img/bg_6.png");
 
     preloadJoao();
 }
 
 //Funcao que delimita a area do jogo
 function setup() {
+    textFont('Roboto Mono');
     createCanvas(1280, 720);
     widthTextBox[0] = width - positionTextBox[0] * 2;
 }
@@ -39,13 +41,31 @@ function draw() {
 
     if (tela === "inicio") {
         mostrarTelaInicial();
+    } else if (tela === "selecaoFase") {
+        mostrarTelaSelecaoFase();
     } else if (tela === "cena") {
         mostrarCena(currentCena);
     } else if (tela === "cenaMenu") {
         mostrarCenaMenu(currentMenu);
-    }else if (tela === "final") {
+    } else if (tela === "final") {
         mostrarTelaFinal(); // Nova função para exibir a tela final
     }
+}
+
+function drawButton(textBtn, xBtn, yBtn, widthBtn, heightBtn, colorBtn) {
+    textFont("Roboto Mono");
+    textStyle(NORMAL);
+    textSize(20);
+
+    noStroke();
+
+    rectMode(CORNER);
+    fill(colorBtn);
+    rect(xBtn, yBtn, widthBtn, heightBtn, heightBtn / 2);
+
+    textAlign(CENTER, CENTER);
+    fill("white");
+    text(textBtn, xBtn + widthBtn / 2, yBtn + heightBtn / 2);
 }
 
 
@@ -79,19 +99,20 @@ function wrapText(text, maxWidth) {
 
 //Funcao que monta a tela inicial
 function mostrarTelaInicial() {
-    background(imagemFundo);
+    background(imagemFundoEscura);
     textAlign(CENTER, CENTER);
     textSize(32);
     fill(0);
-    text("Minha Visual Novel", width / 2, height / 2 - 50);
 
-    // Desenhar o botão
-    rectMode(CENTER);
-    fill(0, 100, 255);
-    rect(width / 2, height / 2 + 50, 200, 50);
-    fill(0);
-    textSize(24);
-    text("Iniciar", width / 2, height / 2 + 50);
+
+    textFont("Dancing Script");
+    textSize(64);
+    textStyle(BOLD);
+    fill("white");
+    text("Therapist in Training", width / 2, 102);
+
+    drawButton("Jogar", 517, 336, 186, 48, "#9F554B");
+    drawButton("Como jogar", 517, 420, 186, 48, "#9F554B");
 }
 
 // Padroniza a criação da imagem referente aos pacientes
@@ -206,11 +227,13 @@ function mostrarTelaFinal() {
 
 function mousePressed() {
     if (tela === "inicio") {
-        if (mouseX > width / 2 - 100 && mouseX < width / 2 + 100 &&
-            mouseY > height / 2 + 25 && mouseY < height / 2 + 75) {
-            tela = "cena";
-            currentCena = cena1;
+        if (mouseX > 517 && mouseX < 517 + 186 &&
+            mouseY > 336 && mouseY < 336 + 48) {
+            tela = "selecaoFase";
             indiceTexto = 0;
+        } else if (mouseX > 517 && mouseX < 517 + 186 &&
+            mouseY > 420 && mouseY < 420 + 48) {
+            console.log("Como jogar");
         }
     } else if (tela === "cena") {
         if (mouseX > width - 175 && mouseX < width - 25 && mouseY > height - 70 && mouseY < height - 30) {
