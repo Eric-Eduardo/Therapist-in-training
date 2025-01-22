@@ -1,4 +1,4 @@
-let currentCena = cena12; // cena atual
+let currentCena = cena1; // cena atual
 let currentMenu = [];
 
 let positionTextBox = [100, 520]; // posição do texto da fala
@@ -9,7 +9,7 @@ let widthMenuBox = [255, 350];
 
 let wrappedText = [];
 
-let tela = "selecaoFase"; // Estado inicial da aplicação
+let tela = "cena"; // Estado inicial da aplicação
 let indiceTexto = 0; // Índice do texto atual
 //Imagens do jogo
 let imagemFundo;
@@ -20,8 +20,8 @@ let pontuacao = 0;
 
 //Funcao que carrega os valores das variaveis
 function preload() {
-    imagemFundo = loadImage("./img/bg_03.png");
-    imagemFundoEscura = loadImage("./img/bg_6.png");
+    imagemFundo = loadImage("./img/bg.png");
+    imagemFundoEscura = loadImage("./img/bg_escuro.png");
 
     preloadJoao();
 }
@@ -30,19 +30,37 @@ function preload() {
 function setup() {
     textFont('Roboto Mono');
     createCanvas(1280, 720);
+    resizeWindow();    
+
+    // document.querySelector("canvas").style.height = "695px";
     widthTextBox[0] = width - positionTextBox[0] * 2;
 }
 
+function resizeWindow() {
+    let windowRatio = window.innerWidth / window.innerHeight;
+
+    if (windowRatio < 1280 / 720) {
+        document.querySelector("canvas").style.width = `${window.innerWidth}px`;
+        document.querySelector("canvas").style.height = `${(720 * window.innerWidth) / 1280}px`;
+    } else {
+        document.querySelector("canvas").style.width = `${(1280 * window.innerHeight) / 720}px`;
+        document.querySelector("canvas").style.height = `${window.innerHeight}px`;
+    }
+}
+
+function windowResized() {
+    resizeWindow();
+}
 
 let mostrou = false;
 //Funcao que exibe coisas na tela
 function draw() {
     background(0);
-
+        
     if (tela === "inicio") {
         mostrarTelaInicial();
     } else if (tela === "selecaoFase") {
-        mostrarTelaSelecaoFase();
+        // mostrarTelaSelecaoFase();
     } else if (tela === "cena") {
         mostrarCena(currentCena);
     } else if (tela === "cenaMenu") {
@@ -234,6 +252,7 @@ function mousePressed() {
         } else if (mouseX > 517 && mouseX < 517 + 186 &&
             mouseY > 420 && mouseY < 420 + 48) {
             console.log("Como jogar");
+            
         }
     } else if (tela === "cena") {
         if (mouseX > width - 175 && mouseX < width - 25 && mouseY > height - 70 && mouseY < height - 30) {
