@@ -1,5 +1,8 @@
-let currentCena = cena1; // cena atual
-let currentMenu = [];
+let imagesMap = {};
+let currentCena = "cena1"; // cena atual
+let currentMenu = "";
+
+let currentHistory = null;
 
 let positionTextBox = [100, 520]; // posição do texto da fala
 let widthTextBox = [500, 160];
@@ -9,29 +12,29 @@ let widthMenuBox = [255, 350];
 
 let wrappedText = [];
 
-let tela = "cena"; // Estado inicial da aplicação
+let tela = "inicio"; // Estado inicial da aplicação
 let indiceTexto = 0; // Índice do texto atual
 //Imagens do jogo
 let imagemFundo;
-let mapImagePerson = {};
 let lastImagePerson = "";
-let buttonsTela = [];
 let pontuacao = 0;
+
+let mapButtons = new Map();
 
 //Funcao que carrega os valores das variaveis
 function preload() {
     imagemFundo = loadImage("./img/bg.png");
     imagemFundoEscura = loadImage("./img/bg_escuro.png");
-
-    preloadJoao();
+    // preloadJoao();
+    loadHistory("textos/historiaJoao.json");
 }
 
 //Funcao que delimita a area do jogo
 function setup() {
     textFont('Roboto Mono');
     createCanvas(1280, 720);
-    resizeWindow();    
-
+    resizeWindow();
+    noLoop();
     // document.querySelector("canvas").style.height = "695px";
     widthTextBox[0] = width - positionTextBox[0] * 2;
 }
@@ -52,11 +55,27 @@ function windowResized() {
     resizeWindow();
 }
 
-let mostrou = false;
+function carregarImagensDaHistoria(imagens) {
+    if (imagens) {
+        for (let imageName in imagens) {
+            imagesMap[imageName] = loadImage(imagens[imageName], () => console.log(`Image ${imagens[imageName]} carregada`), () => "Erro ao carregar imagem ");
+        }
+    }
+}
+
+function loadHistory(path) {
+    loadJSON(path, (data) => {
+        currentHistory = data;
+        currentCena = Object.keys(currentHistory.cenas)[0];
+        carregarImagensDaHistoria(data.imagens);
+    });
+}
+
 //Funcao que exibe coisas na tela
 function draw() {
+    mapButtons.clear();
     background(0);
-        
+
     if (tela === "inicio") {
         mostrarTelaInicial();
     } else if (tela === "selecaoFase") {
@@ -70,7 +89,14 @@ function draw() {
     }
 }
 
-function drawButton(textBtn, xBtn, yBtn, widthBtn, heightBtn, colorBtn) {
+// Para cada tela do jogo, sempre que o jogador clicar na tela o programa irá buscar em mapButtons se há algum botão naquela coordenada que sofreu o click. Caso sim, serão disparado a ffunção "action" referente aquele detereminado botão. Funciona como um "onclick" no JS
+function addClickObject(x1, y1, x2, y2, action) {
+    mapButtons.set(`${x1}${y1}${x2}${y2}`, { x1: x1, y1: y1, x2: x2, y2: y2, action: action });
+}
+
+function drawButton(textBtn, xBtn, yBtn, widthBtn, heightBtn, colorBtn, action) {
+    // Os botões são adicionados automaticamente no "mapa de botões"  
+    addClickObject(xBtn, yBtn, xBtn + widthBtn, yBtn + heightBtn, action);
     textFont("Roboto Mono");
     textStyle(NORMAL);
     textSize(20);
@@ -94,12 +120,10 @@ function wrapText(text, maxWidth) {
     let testLine = "";
 
     for (let word of words) {
-        // console.log(">> ", word);
         testLine = currentLine + (currentLine === "" ? "" : " ") + word;
 
         if (textWidth(testLine) > maxWidth) {
             lines.push(currentLine);
-            // console.log(currentLine);
             currentLine = word;
         } else {
             currentLine = testLine;
@@ -107,7 +131,6 @@ function wrapText(text, maxWidth) {
     }
 
     if (currentLine !== "") {
-        // console.log(currentLine);
         lines.push(currentLine);
     }
 
@@ -129,8 +152,14 @@ function mostrarTelaInicial() {
     fill("white");
     text("Therapist in Training", width / 2, 102);
 
-    drawButton("Jogar", 547, 336, 186, 48, "#9F554B");
-    drawButton("Como jogar", 547, 420, 186, 48, "#9F554B");
+    drawButton("Jogar", 547, 336, 186, 48, "#9F554B", () => {
+        tela = "cena";
+        currentCena = Object.keys(currentHistory.cenas)[0];
+        indiceTexto = 0;
+    });
+    drawButton("Como jogar", 547, 420, 186, 48, "#9F554B", () => {
+        console.log("Como jogar");
+    });
 }
 
 // Padroniza a criação da imagem referente aos pacientes
@@ -166,22 +195,24 @@ function showMessage(name, message) {
 }
 
 // Carrega a cena (fundo, imagem do personagem e fala)
-function mostrarCena(cena) {
+function mostrarCena() {
     background(imagemFundo);
-
-    // showPerson(joaoFalando, 500);
-    lastImagePerson = cena.cenas[indiceTexto].imgPerson;
-    showPerson(mapImagePerson[lastImagePerson], 500);
-
-    showMessage(cena.cenas[indiceTexto].name, cena.cenas[indiceTexto].text);
+    lastImagePerson = imagesMap[currentHistory.cenas[currentCena].dialogos[indiceTexto].imgPerson];
+    showPerson(lastImagePerson, 500);
+    showMessage(currentHistory.cenas[currentCena].dialogos[indiceTexto].name, currentHistory.cenas[currentCena].dialogos[indiceTexto].text);
 
     // Botão para avançar
-    rectMode(CENTER);
-    fill(0, 200, 0);
-    rect(width - 100, height - 50, 150, 40);
-    fill(0);
-    textSize(18);
-    text("Próximo", width - 100, height - 50);
+    let action = () => {
+        indiceTexto++;
+        if (indiceTexto >= currentHistory.cenas[currentCena].dialogos.length) {
+            tela = currentHistory.cenas[currentCena].nextTela;
+            indiceTexto = 0;
+            let nextJump = currentHistory.cenas[currentCena].jump;
+            currentCena = currentHistory.cenas[nextJump] ? nextJump : currentCena;
+            currentMenu = currentHistory.menus[nextJump] ? nextJump : currentMenu;
+        }
+    }
+    drawButton("Próximo", positionTextBox[0] + widthTextBox[0] - 90, positionTextBox[1] + widthTextBox[1] - 20, 150, 40, "#983f34", action);
 }
 
 // Mostra o menu de opções
@@ -210,15 +241,23 @@ function showMenu(menu) {
         for (let a = 0; a < wrappedTextMenu.length; a++) {
             text(wrappedTextMenu[a], 20 + positionMenuBox[0] + i * (widthMenuBox[0] + 15), positionMenuBox[1] + 60 + a * 20);
         }
+
+        // Adicionando ação ao clicar em um card
+        addClickObject(positionMenuBox[0] + i * (widthMenuBox[0] + 15), positionMenuBox[1], positionMenuBox[0] + i * (widthMenuBox[0] + 15) + widthMenuBox[0], positionMenuBox[1] + widthMenuBox[1], () => {
+            pontuacao += currentHistory.menus[currentMenu].opcoes[i].pontuacao;
+            tela = currentHistory.menus[currentMenu].opcoes[i].nextTela;
+
+            let nextJump = currentHistory.menus[currentMenu].opcoes[i].jump;
+            currentCena = currentHistory.cenas[nextJump] ? nextJump : currentCena;
+            currentMenu = currentHistory.menus[nextJump] ? nextJump : currentMenu;
+        })
     }
 }
 
-function mostrarCenaMenu(menu) {
+function mostrarCenaMenu() {
     background(imagemFundo);
-
-    showPerson(mapImagePerson[lastImagePerson], 500);
-
-    showMenu(menu);
+    showPerson(lastImagePerson, 500);
+    showMenu(currentHistory.menus[currentMenu].opcoes);
 }
 
 function mostrarTelaFinal() {
@@ -241,63 +280,20 @@ function mostrarTelaFinal() {
     textSize(24);
     fill(100);
     text("Clique para reiniciar", width / 2, height / 2 + 80);
-}
-
-function mousePressed() {
-    if (tela === "inicio") {
-        if (mouseX > 517 && mouseX < 517 + 186 &&
-            mouseY > 336 && mouseY < 336 + 48) {
-            tela = "selecaoFase";
-            indiceTexto = 0;
-        } else if (mouseX > 517 && mouseX < 517 + 186 &&
-            mouseY > 420 && mouseY < 420 + 48) {
-            console.log("Como jogar");
-            
-        }
-    } else if (tela === "cena") {
-        if (mouseX > width - 175 && mouseX < width - 25 && mouseY > height - 70 && mouseY < height - 30) {
-            indiceTexto++;
-            if (indiceTexto >= currentCena.cenas.length) {
-                tela = currentCena.nextTela;
-                indiceTexto = 0;
-
-                if (tela === "cena") {
-                    currentCena = mapCenas[currentCena.jump];
-                } else if (tela === "cenaMenu") {
-                    currentMenu = mapMenus[currentCena.jump];
-                } else if (tela === "final") {
-                    // Nada a fazer, já está na tela final
-                }
-            }
-        }
-    } else if (tela === "cenaMenu") {
-        let selectedOption = -1;
-
-        for (let i = 0; i < currentMenu.length; i++) {
-            if (mouseX > positionMenuBox[0] + i * (widthMenuBox[0] + 15) &&
-                mouseX < positionMenuBox[0] + i * (widthMenuBox[0] + 15) + widthMenuBox[0] &&
-                mouseY > positionMenuBox[1] && mouseY < positionMenuBox[1] + widthMenuBox[1]) {
-                selectedOption = i;
-            }
-        }
-
-        if (selectedOption !== -1) {
-            pontuacao += currentMenu[selectedOption].pontuacao;
-            tela = currentMenu[selectedOption].nextTela;
-
-            if (tela === "cena") {
-                currentCena = mapCenas[currentMenu[selectedOption].jump];
-            } else if (tela === "cenaMenu") {
-                currentMenu = mapMenus[currentMenu[selectedOption].jump];
-            } else if (tela === "final") {
-                // Nada a fazer, já está na tela final
-            }
-        }
-    } else if (tela === "final") {
-        // Reiniciar o jogo ao clicar na tela final
+    addClickObject(width / 2 - 200, height / 2 - 100, width / 2 + 200, height / 2 + 100, () => {
         tela = "inicio";
         pontuacao = 0; // Reinicia a pontuação
         indiceTexto = 0;
-        currentCena = cena1; // Reinicia a primeira cena
-    }
+    })
+}
+
+function mousePressed() {
+
+    mapButtons.forEach((valor, chave) => {
+        if (mouseX > valor.x1 && mouseX < valor.x2 && mouseY > valor.y1 && mouseY < valor.y2) {
+            valor.action();
+        }
+    })
+
+    redraw();
 }
