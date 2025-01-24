@@ -1,6 +1,6 @@
 let imagesMap = {};
 let currentCena = "cena1"; // cena atual
-let currentMenu = "";
+let currentMenu = "menu2";
 
 let currentHistory = null;
 
@@ -16,7 +16,7 @@ let tela = "inicio"; // Estado inicial da aplicação
 let indiceTexto = 0; // Índice do texto atual
 //Imagens do jogo
 let imagemFundo;
-let lastImagePerson = "";
+let lastImagePerson;
 let pontuacao = 0;
 
 let mapButtons = new Map();
@@ -31,10 +31,9 @@ function preload() {
 
 //Funcao que delimita a area do jogo
 function setup() {
-    textFont('Roboto Mono');
     createCanvas(1280, 720);
     resizeWindow();
-    noLoop();
+    // noLoop();
     // document.querySelector("canvas").style.height = "695px";
     widthTextBox[0] = width - positionTextBox[0] * 2;
 }
@@ -61,6 +60,8 @@ function carregarImagensDaHistoria(imagens) {
             imagesMap[imageName] = loadImage(imagens[imageName], () => console.log(`Image ${imagens[imageName]} carregada`), () => "Erro ao carregar imagem ");
         }
     }
+
+    lastImagePerson = imagesMap[Object.keys(imagesMap)[0]];
 }
 
 function loadHistory(path) {
@@ -73,6 +74,7 @@ function loadHistory(path) {
 
 //Funcao que exibe coisas na tela
 function draw() {
+    textFont('Roboto Mono');
     mapButtons.clear();
     background(0);
 
@@ -115,7 +117,8 @@ function drawButton(textBtn, xBtn, yBtn, widthBtn, heightBtn, colorBtn, action) 
 
 function wrapText(text, maxWidth) {
     let words = text.split(' '); // Divide o texto em palavras
-    let lines = [];
+    // let lines = [];
+    let line = "";
     let currentLine = "";
     let testLine = "";
 
@@ -123,7 +126,8 @@ function wrapText(text, maxWidth) {
         testLine = currentLine + (currentLine === "" ? "" : " ") + word;
 
         if (textWidth(testLine) > maxWidth) {
-            lines.push(currentLine);
+            // lines.push(currentLine);
+            line += currentLine + "\n"
             currentLine = word;
         } else {
             currentLine = testLine;
@@ -131,10 +135,12 @@ function wrapText(text, maxWidth) {
     }
 
     if (currentLine !== "") {
-        lines.push(currentLine);
+        // lines.push(currentLine);
+        line += currentLine;
     }
 
-    return lines;
+    // return lines;
+    return line;
 }
 
 
@@ -184,14 +190,11 @@ function showMessage(name, message) {
     fill("white");
     textAlign(LEFT, TOP);
     textStyle(BOLD);
+    textSize(16);
     text(name, positionTextBox[0] + 30, positionTextBox[1] + 20);
     textStyle(NORMAL);
 
-    wrappedText = wrapText(message, widthTextBox[0] - 30 * 2);
-
-    for (let i = 0; i < wrappedText.length; i++) {
-        text(wrappedText[i], positionTextBox[0] + 30, positionTextBox[1] + 60 + i * 25);
-    }
+    text(wrapText(message, widthTextBox[0] - 30 * 2), positionTextBox[0] + 30, positionTextBox[1] + 60);
 }
 
 // Carrega a cena (fundo, imagem do personagem e fala)
@@ -217,33 +220,49 @@ function mostrarCena() {
 
 // Mostra o menu de opções
 function showMenu(menu) {
-    let wrappedTextMenu = "";
+    let maxLineNumber = 0;
+    let textsize = 16;
+    let texts = [];
+
+    let gap = 10;
+    let xMenu = 100; // posição x do primeiro card
+    let widthMenu = (width - 2*xMenu - (menu.length-1)*gap)/(menu.length);
+    let heightMenu;
+
 
     noStroke(); // Sem borda
 
     rectMode(CORNER);
+
+    textSize(textsize);
+
+    for (let i = 0; i < menu.length; i++) {
+        texts.push(wrapText(menu[i].text, widthMenu-30));
+        let numLines = texts[i].split('\n').length;
+        maxLineNumber = numLines > maxLineNumber ? numLines : maxLineNumber;
+    }
+
+    heightMenu = maxLineNumber*(textsize*1.25) + 75;
+
     for (let i = 0; i < menu.length; i++) {
         fill("#983f34DC");
-        rect(positionMenuBox[0] + i * (widthMenuBox[0] + 15), positionMenuBox[1], widthMenuBox[0], widthMenuBox[1], 20);
+        rectMode(CORNER);
+        rect(xMenu + i * (widthMenu + gap), height/2 - heightMenu/2, widthMenu, heightMenu, 20);
 
         textSize(24);
         fill("white");
         textAlign(CENTER, TOP);
         textStyle(BOLD);
-        // rectMode(CENTER);
-        text(i + 1, positionMenuBox[0] + widthMenuBox[0] / 2 + i * (widthMenuBox[0] + 15), positionMenuBox[1] + 20);
+        rectMode(CENTER);
+        text(i + 1, xMenu + widthMenu/2 + i * (widthMenu + gap), height/2 - heightMenu/2 + 20);
         textStyle(NORMAL);
         textAlign(LEFT, TOP);
-        textSize(16);
+        textSize(textsize);
 
-        wrappedTextMenu = wrapText(menu[i].text, widthMenuBox[0] - 30);
+        
+        text(texts[i], xMenu + 15 + i * (widthMenu + gap), height/2 - heightMenu/2 + 60);
 
-        for (let a = 0; a < wrappedTextMenu.length; a++) {
-            text(wrappedTextMenu[a], 20 + positionMenuBox[0] + i * (widthMenuBox[0] + 15), positionMenuBox[1] + 60 + a * 20);
-        }
-
-        // Adicionando ação ao clicar em um card
-        addClickObject(positionMenuBox[0] + i * (widthMenuBox[0] + 15), positionMenuBox[1], positionMenuBox[0] + i * (widthMenuBox[0] + 15) + widthMenuBox[0], positionMenuBox[1] + widthMenuBox[1], () => {
+        addClickObject(xMenu + i * (widthMenu + gap), height/2 - heightMenu/2, xMenu + i * (widthMenu + gap)+widthMenu, height/2 - heightMenu/2 + heightMenu, () => {
             pontuacao += currentHistory.menus[currentMenu].opcoes[i].pontuacao;
             tela = currentHistory.menus[currentMenu].opcoes[i].nextTela;
 
@@ -252,6 +271,7 @@ function showMenu(menu) {
             currentMenu = currentHistory.menus[nextJump] ? nextJump : currentMenu;
         })
     }
+
 }
 
 function mostrarCenaMenu() {
@@ -295,5 +315,5 @@ function mousePressed() {
         }
     })
 
-    redraw();
+    // redraw();
 }
