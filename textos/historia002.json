@@ -1,0 +1,257 @@
+{
+    "title": "Irmão do João",
+    "firstCena": "inicioSessao",
+    "firstTela": "cena",
+    "imagens": {
+      "neutro": "img/joao/joao_01.png",
+      "falando": "img/joao/joao_02.png",
+      "cabeça baixa": "img/joao/joao_03.png",
+      "preocupado": "img/joao/joao_04.png",
+      "feliz": "img/joao/joao_07.png",
+      "falando feliz": "img/joao/joao_06.png",
+      "cabeça baixa calado": "img/joao/joao_05.png"
+    },
+    "cenas": {
+      "inicioSessao": {
+        "dialogos": [
+          {
+            "name": "Paciente",
+            "text": "Ultimamente, tenho me sentido muito ansioso no trabalho.",
+            "imgPerson": "preocupado"
+          },
+          {
+            "name": "Psicólogo",
+            "text": "Pode me contar mais sobre o que tem causado essa ansiedade?",
+            "imgPerson": "neutro"
+          },
+          {
+            "name": "Paciente",
+            "text": "Acho que é a pressão por resultados e o medo de falhar.",
+            "imgPerson": "cabeça baixa"
+          },
+          {
+            "name": "Psicólogo",
+            "text": "Como essa pressão afeta você no dia a dia?",
+            "imgPerson": "falando"
+          },
+          {
+            "name": "Paciente",
+            "text": "Eu perco o foco, me sinto exausto e não consigo aproveitar meu tempo livre.",
+            "imgPerson": "cabeça baixa calado"
+          }
+        ],
+        "nextTela": "cenaMenu",
+        "jump": "menuSessao1"
+      },
+      "exploracaoAnsiedade": {
+        "dialogos": [
+          {
+            "name": "Psicólogo",
+            "text": "Vamos explorar juntos o que você sente nesses momentos de pressão.",
+            "imgPerson": "falando"
+          },
+          {
+            "name": "Paciente",
+            "text": "Eu sinto um aperto no peito e minha mente não para de pensar em tudo que pode dar errado.",
+            "imgPerson": "preocupado"
+          },
+          {
+            "name": "Psicólogo",
+            "text": "Esses pensamentos costumam ser mais sobre o futuro ou algo que já aconteceu?",
+            "imgPerson": "falando"
+          },
+          {
+            "name": "Paciente",
+            "text": "Principalmente sobre o futuro, acho que tenho medo de decepcionar as pessoas ao meu redor.",
+            "imgPerson": "cabeça baixa calado"
+          },
+          {
+            "name": "Psicólogo",
+            "text": "Entendi. E você consegue identificar momentos em que já superou situações parecidas?",
+            "imgPerson": "neutro"
+          },
+          {
+            "name": "Paciente",
+            "text": "Sim, mas parece que cada vez é mais difícil lidar com isso.",
+            "imgPerson": "preocupado"
+          }
+        ],
+        "nextTela": "cenaMenu",
+        "jump": "menuSessao2"
+      },
+      "reflexao": {
+        "dialogos": [
+          {
+            "name": "Psicólogo",
+            "text": "Uma estratégia que pode ajudar é mudar a forma como você encara essas situações.",
+            "imgPerson": "falando"
+          },
+          {
+            "name": "Paciente",
+            "text": "Como assim? Pode me explicar melhor?",
+            "imgPerson": "cabeça baixa"
+          },
+          {
+            "name": "Psicólogo",
+            "text": "Claro! Podemos trabalhar juntos para criar uma técnica de autocompaixão e definir pequenas metas realistas.",
+            "imgPerson": "feliz"
+          },
+          {
+            "name": "Paciente",
+            "text": "Acho que isso poderia me ajudar bastante.",
+            "imgPerson": "feliz"
+          }
+        ],
+        "nextTela": "cenaMenu",
+        "jump": "menuSessao3"
+      },
+      "desabafo": {
+        "dialogos": [
+          {
+            "name": "Paciente",
+            "text": "Às vezes sinto que estou sozinho nisso tudo. Não sei com quem desabafar.",
+            "imgPerson": "cabeça baixa"
+          },
+          {
+            "name": "Psicólogo",
+            "text": "Você já tentou compartilhar seus sentimentos com alguém próximo?",
+            "imgPerson": "neutro"
+          },
+          {
+            "name": "Paciente",
+            "text": "Tenho medo de ser julgado ou de sobrecarregar as pessoas.",
+            "imgPerson": "preocupado"
+          },
+          {
+            "name": "Psicólogo",
+            "text": "Esse medo é compreensível, mas às vezes as pessoas podem nos surpreender com apoio inesperado.",
+            "imgPerson": "falando"
+          },
+          {
+            "name": "Paciente",
+            "text": "Talvez eu deva tentar. Mas e se eles não entenderem?",
+            "imgPerson": "cabeça baixa calado"
+          },
+          {
+            "name": "Psicólogo",
+            "text": "Você não precisa que todos entendam, mas encontrar uma ou duas pessoas de confiança pode fazer diferença.",
+            "imgPerson": "neutro"
+          }
+        ],
+        "nextTela": "cenaMenu",
+        "jump": "menuSessao4"
+      },
+      "finalSessao": {
+        "dialogos": [
+          {
+            "name": "Psicólogo",
+            "text": "Hoje exploramos muitas coisas importantes. Como você se sente agora?",
+            "imgPerson": "neutro"
+          },
+          {
+            "name": "Paciente",
+            "text": "Mais leve. Sinto que entendi melhor minhas preocupações e como lidar com elas.",
+            "imgPerson": "feliz"
+          },
+          {
+            "name": "Psicólogo",
+            "text": "Que bom ouvir isso. Vamos continuar desenvolvendo essas habilidades nas próximas sessões.",
+            "imgPerson": "falando feliz"
+          }
+        ],
+        "nextTela": "final",
+        "jump": ""
+      }
+    },
+    "menus": {
+      "menuSessao1": {
+        "opcoes": [
+          {
+            "text": "Me fale mais sobre o medo de falhar.",
+            "pontuacao": 2,
+            "nextTela": "cena",
+            "jump": "exploracaoAnsiedade"
+          },
+          {
+            "text": "Esse medo é normal, todos o sentimos.",
+            "pontuacao": 0,
+            "nextTela": "cena",
+            "jump": "exploracaoAnsiedade"
+          },
+          {
+            "text": "Você deveria aprender a relaxar.",
+            "pontuacao": -1,
+            "nextTela": "cena",
+            "jump": "exploracaoAnsiedade"
+          }
+        ]
+      },
+      "menuSessao2": {
+        "opcoes": [
+          {
+            "text": "Vamos criar uma estratégia para lidar com esses pensamentos.",
+            "pontuacao": 2,
+            "nextTela": "cena",
+            "jump": "reflexao"
+          },
+          {
+            "text": "Apenas não pense no futuro e tudo ficará bem.",
+            "pontuacao": -1,
+            "nextTela": "cena",
+            "jump": "reflexao"
+          },
+          {
+            "text": "Que tal falarmos sobre outra coisa para distrair sua mente?",
+            "pontuacao": 1,
+            "nextTela": "cena",
+            "jump": "reflexao"
+          }
+        ]
+      },
+      "menuSessao3": {
+        "opcoes": [
+          {
+            "text": "Vamos nos concentrar em metas pequenas e alcançáveis.",
+            "pontuacao": 2,
+            "nextTela": "cena",
+            "jump": "finalSessao"
+          },
+          {
+            "text": "Se você apenas trabalhar mais, vai superar isso.",
+            "pontuacao": -1,
+            "nextTela": "cena",
+            "jump": "finalSessao"
+          },
+          {
+            "text": "Que tal escrever suas preocupações e ver quais realmente fazem sentido?",
+            "pontuacao": 1,
+            "nextTela": "cena",
+            "jump": "finalSessao"
+          }
+        ]
+      },
+      "menuSessao4": {
+        "opcoes": [
+          {
+            "text": "Vamos explorar como você pode escolher com quem compartilhar.",
+            "pontuacao": 2,
+            "nextTela": "cena",
+            "jump": "finalSessao"
+          },
+          {
+            "text": "Não se preocupe com isso agora, vamos mudar de assunto.",
+            "pontuacao": -1,
+            "nextTela": "cena",
+            "jump": "finalSessao"
+          },
+          {
+            "text": "Talvez escrever seus sentimentos antes de falar ajude.",
+            "pontuacao": 1,
+            "nextTela": "cena",
+            "jump": "finalSessao"
+          }
+        ]
+      }
+    }
+  }
+  

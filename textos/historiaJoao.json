@@ -1,4 +1,7 @@
-{
+{    
+    "title": "João Gomes",
+    "firstCena": "cena1",
+    "firstTela": "cena",
     "imagens": {
         "neutro": "img/joao/joao_01.png",
         "falando": "img/joao/joao_02.png",

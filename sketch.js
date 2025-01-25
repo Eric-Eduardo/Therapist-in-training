@@ -1,4 +1,8 @@
-let imagesMap = {};
+let histories = ["historia002.json", "historiaJoao.json"];
+let jsonHistories = [];
+let actualImagesMap = null;
+let allImagesMap = [];
+
 let currentCena = "cena1"; // cena atual
 let currentMenu = "menu2";
 
@@ -26,16 +30,24 @@ function preload() {
     imagemFundo = loadImage("./img/bg.png");
     imagemFundoEscura = loadImage("./img/bg_escuro.png");
     // preloadJoao();
-    loadHistory("textos/historiaJoao.json");
+    loadHistories(histories);
+
+    // loadHistory("textos/historia002.json");
 }
 
 //Funcao que delimita a area do jogo
 function setup() {
     createCanvas(1280, 720);
     resizeWindow();
-    // noLoop();
+    noLoop();
     // document.querySelector("canvas").style.height = "695px";
     widthTextBox[0] = width - positionTextBox[0] * 2;
+    
+    // currentHistory = jsonHistories[0];
+    // currentCena = currentHistory.firstCena;
+    // tela = currentHistory.firstTela;
+    // indiceTexto = 0;
+    // actualImagesMap = allImagesMap[0];
 }
 
 function resizeWindow() {
@@ -54,20 +66,30 @@ function windowResized() {
     resizeWindow();
 }
 
+function loadHistories(arrayHistories) {
+    for (let h of arrayHistories) {
+        loadHistory(`textos/${h}`);
+    }
+}
+
 function carregarImagensDaHistoria(imagens) {
+    let objectImages = new Map();
+
     if (imagens) {
         for (let imageName in imagens) {
-            imagesMap[imageName] = loadImage(imagens[imageName], () => console.log(`Image ${imagens[imageName]} carregada`), () => "Erro ao carregar imagem ");
+            objectImages.set(imageName, loadImage(imagens[imageName], () => console.log(`Image ${imagens[imageName]} carregada`), () => "Erro ao carregar imagem "));
         }
     }
 
-    lastImagePerson = imagesMap[Object.keys(imagesMap)[0]];
+    allImagesMap.push(objectImages);
+    // lastImagePerson = imagesMap[Object.keys(imagesMap)[0]];
 }
 
 function loadHistory(path) {
     loadJSON(path, (data) => {
-        currentHistory = data;
-        currentCena = Object.keys(currentHistory.cenas)[0];
+        jsonHistories.push(data);
+        // currentHistory = data;
+        // currentCena = Object.keys(currentHistory.cenas)[0];
         carregarImagensDaHistoria(data.imagens);
     });
 }
@@ -81,7 +103,7 @@ function draw() {
     if (tela === "inicio") {
         mostrarTelaInicial();
     } else if (tela === "selecaoFase") {
-        // mostrarTelaSelecaoFase();
+        mostrarTelaSelecaoFase();
     } else if (tela === "cena") {
         mostrarCena(currentCena);
     } else if (tela === "cenaMenu") {
@@ -89,6 +111,8 @@ function draw() {
     } else if (tela === "final") {
         mostrarTelaFinal(); // Nova função para exibir a tela final
     }
+
+    // image(allImagesMap[0].get('neutro'), 0, 0, 500, 500);
 }
 
 // Para cada tela do jogo, sempre que o jogador clicar na tela o programa irá buscar em mapButtons se há algum botão naquela coordenada que sofreu o click. Caso sim, serão disparado a ffunção "action" referente aquele detereminado botão. Funciona como um "onclick" no JS
@@ -159,9 +183,9 @@ function mostrarTelaInicial() {
     text("Therapist in Training", width / 2, 102);
 
     drawButton("Jogar", 547, 336, 186, 48, "#9F554B", () => {
-        tela = "cena";
-        currentCena = Object.keys(currentHistory.cenas)[0];
-        indiceTexto = 0;
+        tela = "selecaoFase";
+        // currentCena = Object.keys(currentHistory.cenas)[0];
+        // indiceTexto = 0;
     });
     drawButton("Como jogar", 547, 420, 186, 48, "#9F554B", () => {
         console.log("Como jogar");
@@ -177,8 +201,8 @@ function showPerson(img, size) {
     let newHeight = newWidth * aspectRatio;
 
     // Desenha a imagem redimensionada
-    image(img, 410, 75, newWidth, newHeight);
-}
+    image(img, 395, 76, newWidth, newHeight);
+} 
 
 // Mostra a caixa de diálogo
 function showMessage(name, message) {
@@ -200,7 +224,7 @@ function showMessage(name, message) {
 // Carrega a cena (fundo, imagem do personagem e fala)
 function mostrarCena() {
     background(imagemFundo);
-    lastImagePerson = imagesMap[currentHistory.cenas[currentCena].dialogos[indiceTexto].imgPerson];
+    lastImagePerson = actualImagesMap.get(currentHistory.cenas[currentCena].dialogos[indiceTexto].imgPerson);
     showPerson(lastImagePerson, 500);
     showMessage(currentHistory.cenas[currentCena].dialogos[indiceTexto].name, currentHistory.cenas[currentCena].dialogos[indiceTexto].text);
 
@@ -226,7 +250,7 @@ function showMenu(menu) {
 
     let gap = 10;
     let xMenu = 100; // posição x do primeiro card
-    let widthMenu = (width - 2*xMenu - (menu.length-1)*gap)/(menu.length);
+    let widthMenu = (width - 2 * xMenu - (menu.length - 1) * gap) / (menu.length);
     let heightMenu;
 
 
@@ -237,32 +261,32 @@ function showMenu(menu) {
     textSize(textsize);
 
     for (let i = 0; i < menu.length; i++) {
-        texts.push(wrapText(menu[i].text, widthMenu-30));
+        texts.push(wrapText(menu[i].text, widthMenu - 30));
         let numLines = texts[i].split('\n').length;
         maxLineNumber = numLines > maxLineNumber ? numLines : maxLineNumber;
     }
 
-    heightMenu = maxLineNumber*(textsize*1.25) + 75;
+    heightMenu = maxLineNumber * (textsize * 1.25) + 75;
 
     for (let i = 0; i < menu.length; i++) {
         fill("#983f34DC");
         rectMode(CORNER);
-        rect(xMenu + i * (widthMenu + gap), height/2 - heightMenu/2, widthMenu, heightMenu, 20);
+        rect(xMenu + i * (widthMenu + gap), height / 2 - heightMenu / 2, widthMenu, heightMenu, 20);
 
         textSize(24);
         fill("white");
         textAlign(CENTER, TOP);
         textStyle(BOLD);
         rectMode(CENTER);
-        text(i + 1, xMenu + widthMenu/2 + i * (widthMenu + gap), height/2 - heightMenu/2 + 20);
+        text(i + 1, xMenu + widthMenu / 2 + i * (widthMenu + gap), height / 2 - heightMenu / 2 + 20);
         textStyle(NORMAL);
         textAlign(LEFT, TOP);
         textSize(textsize);
 
-        
-        text(texts[i], xMenu + 15 + i * (widthMenu + gap), height/2 - heightMenu/2 + 60);
 
-        addClickObject(xMenu + i * (widthMenu + gap), height/2 - heightMenu/2, xMenu + i * (widthMenu + gap)+widthMenu, height/2 - heightMenu/2 + heightMenu, () => {
+        text(texts[i], xMenu + 15 + i * (widthMenu + gap), height / 2 - heightMenu / 2 + 60);
+
+        addClickObject(xMenu + i * (widthMenu + gap), height / 2 - heightMenu / 2, xMenu + i * (widthMenu + gap) + widthMenu, height / 2 - heightMenu / 2 + heightMenu, () => {
             pontuacao += currentHistory.menus[currentMenu].opcoes[i].pontuacao;
             tela = currentHistory.menus[currentMenu].opcoes[i].nextTela;
 
@@ -279,6 +303,52 @@ function mostrarCenaMenu() {
     showPerson(lastImagePerson, 500);
     showMenu(currentHistory.menus[currentMenu].opcoes);
 }
+
+function mostrarTelaSelecaoFase() {
+    let widthCard = 180;
+    let heightCard = 130;
+    let gap = 40;
+    let marginTop = 190;
+
+    rectMode(CORNER);
+    background(imagemFundoEscura);
+    textSize(36);
+
+    textStyle(BOLD);
+    fill("white");
+
+    textAlign(LEFT, TOP);
+    text("Selecione uma sessão", 110, 102);
+
+
+    noStroke();
+    for (let i in jsonHistories) {
+        fill("#9B3E27");
+        rect(110 + i * (widthCard + gap), marginTop, widthCard, heightCard, 20);
+        fill("white");
+        textAlign(CENTER, CENTER);
+        textSize(20);
+        text(jsonHistories[i].title, 110 + widthCard / 2 + i * (widthCard + gap), marginTop + heightCard / 2);
+
+
+        addClickObject(110 + i * (widthCard + gap), marginTop, 110 + i * (widthCard + gap) + widthCard, marginTop + heightCard, () => {
+            currentHistory = jsonHistories[i];
+            currentCena = currentHistory.firstCena;
+            tela = currentHistory.firstTela;
+            indiceTexto = 0;
+            actualImagesMap = allImagesMap[i];
+            // lastImagePerson = allImagesMap[i].get('neutro');
+            // console.log(Object.keys(allImagesMap[i]));
+            // carregarImagensDaHistoria(currentHistory.imagens);
+
+        })
+        // console.log(jsonHistories[i].title);
+    }
+
+
+
+}
+
 
 function mostrarTelaFinal() {
     background(imagemFundo); // Fundo bg_03.png
@@ -315,5 +385,5 @@ function mousePressed() {
         }
     })
 
-    // redraw();
+    redraw();
 }
