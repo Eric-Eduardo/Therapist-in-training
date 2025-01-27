@@ -3,8 +3,8 @@ let jsonHistories = [];
 let actualImagesMap = null;
 let allImagesMap = [];
 
-let currentCena = "cena1"; // cena atual
-let currentMenu = "menu2";
+let currentCena = ""; // cena atual
+let currentMenu = "";
 
 let currentHistory = null;
 
@@ -235,8 +235,10 @@ function mostrarCena() {
             tela = currentHistory.cenas[currentCena].nextTela;
             indiceTexto = 0;
             let nextJump = currentHistory.cenas[currentCena].jump;
+            
             currentCena = currentHistory.cenas[nextJump] ? nextJump : currentCena;
             currentMenu = currentHistory.menus[nextJump] ? nextJump : currentMenu;
+
         }
     }
     drawButton("Próximo", positionTextBox[0] + widthTextBox[0] - 90, positionTextBox[1] + widthTextBox[1] - 20, 150, 40, "#983f34", action);
