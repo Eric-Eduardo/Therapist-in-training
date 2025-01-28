@@ -27,6 +27,7 @@ let pontuacao = 0;
 let currentChar = 0; // Quantos caracteres do texto foram exibidos
 let isAnimating = false; // Indica se a animação está em progresso
 
+let respostas = {};
 
 let mapButtons = new Map();
 
@@ -278,7 +279,7 @@ function avancarDialogo() {
 
 // Função que anima o texto como se estivesse sendo digitado automaticamente
 function animarTexto(texto, callback) {
-    let frameRateTexto = 30; // Velocidade da digitação (letras por segundo)
+    let frameRateTexto = 60; // Velocidade da digitação (letras por segundo)
     let animacao = setInterval(() => {
         if (currentChar <= texto.length) {
             redraw();
@@ -297,12 +298,10 @@ function showMenu(menu) {
 
     let gap = 10;
     let xMenu = 100; // posição x do primeiro card
-    let widthMenu = (width - 2 * xMenu - (menu.length - 1) * gap) / (menu.length);
+    let widthMenu = (width - 2 * xMenu - (menu.length - 1) * gap) / menu.length;
     let heightMenu;
 
-
     noStroke(); // Sem borda
-
     rectMode(CORNER);
 
     textSize(textsize);
@@ -330,20 +329,38 @@ function showMenu(menu) {
         textAlign(LEFT, TOP);
         textSize(textsize);
 
-
         text(texts[i], xMenu + 15 + i * (widthMenu + gap), height / 2 - heightMenu / 2 + 60);
 
+        // Adiciona clique para a opção
         addClickObject(xMenu + i * (widthMenu + gap), height / 2 - heightMenu / 2, xMenu + i * (widthMenu + gap) + widthMenu, height / 2 - heightMenu / 2 + heightMenu, () => {
-            pontuacao += currentHistory.menus[currentMenu].opcoes[i].pontuacao;
-            tela = currentHistory.menus[currentMenu].opcoes[i].nextTela;
+            // Registra o feedback associado ao menu
+            let opcaoEscolhida = currentHistory.menus[currentMenu].opcoes[i];
+            let pontuacaoEscolhida = opcaoEscolhida.pontuacao;
+            let feedbackEscolhido = opcaoEscolhida.feedback;
 
-            let nextJump = currentHistory.menus[currentMenu].opcoes[i].jump;
+            respostas[currentMenu] = feedbackEscolhido; // Salva o feedback escolhido
+            console.log(`Resposta registrada no Menu ${currentMenu}: Feedback "${feedbackEscolhido}"`);
+
+            // Atualiza pontuação total e tela
+            pontuacao += pontuacaoEscolhida;
+            tela = opcaoEscolhida.nextTela;
+
+            let nextJump = opcaoEscolhida.jump;
             currentCena = currentHistory.cenas[nextJump] ? nextJump : currentCena;
             currentMenu = currentHistory.menus[nextJump] ? nextJump : currentMenu;
-        })
+        });
     }
-
 }
+
+// Função para fornecer feedback com base nas escolhas
+function fornecerFeedback() {
+    console.log("\nFeedback das escolhas:");
+    for (const [menu, feedback] of Object.entries(respostas)) {
+        console.log(`No Menu ${menu}, o feedback foi: "${feedback}"`);
+    }
+    console.log(respostas);
+}
+
 
 function mostrarCenaMenu() {
     background(imagemFundo);
@@ -395,33 +412,45 @@ function mostrarTelaSelecaoFase() {
 
 
 }
-
-
 function mostrarTelaFinal() {
     background(imagemFundo); // Fundo bg_03.png
 
     // Retângulo central para mostrar a pontuação
     rectMode(CENTER);
     fill(255, 200); // Cor branca semitransparente
-    rect(width / 2, height / 2, 400, 200, 20);
+    rect(width / 2, height / 2, 500, 300, 20);
 
     // Texto da pontuação
     textSize(32);
     fill(0); // Cor preta
     textAlign(CENTER, CENTER);
-    text("Pontuação Final", width / 2, height / 2 - 40);
+    text("Pontuação Final", width / 2, height / 2 - 120);
     textSize(48);
-    text(`${pontuacao}`, width / 2, height / 2 + 20);
+    text(`${pontuacao}`, width / 2, height / 2 - 60);
+
+    // Exibir feedback com base nas escolhas armazenadas em respostas
+    textSize(16);
+    fill(0);
+    let feedbackY = height / 2; // Linha de início do feedback
+    for (let menu in respostas) {
+        let feedback = respostas[menu]; // Recupera o feedback armazenado
+        if (feedback) {
+            text(`Menu ${menu}: ${feedback}`, width / 2, feedbackY);
+            feedbackY += 20; // Pula uma linha
+        }
+    }
 
     // Texto de reinício ou saída
     textSize(24);
     fill(100);
-    text("Clique para reiniciar", width / 2, height / 2 + 80);
-    addClickObject(width / 2 - 200, height / 2 - 100, width / 2 + 200, height / 2 + 100, () => {
+    text("Clique para reiniciar", width / 2, feedbackY + 40);
+
+    addClickObject(width / 2 - 200, height / 2 - 150, width / 2 + 200, height / 2 + 150, () => {
         tela = "inicio";
         pontuacao = 0; // Reinicia a pontuação
         indiceTexto = 0;
-    })
+        respostas = {}; // Reinicia as respostas
+    });
 }
 
 function mousePressed() {
