@@ -3,13 +3,13 @@
     "firstCena": "inicioSessao",
     "firstTela": "cena",
     "imagens": {
-      "neutro": "img/joao/joao_01.png",
-      "falando": "img/joao/joao_02.png",
-      "cabeça baixa": "img/joao/joao_03.png",
-      "preocupado": "img/joao/joao_04.png",
-      "feliz": "img/joao/joao_07.png",
-      "falando feliz": "img/joao/joao_06.png",
-      "cabeça baixa calado": "img/joao/joao_05.png"
+      "neutro": "img/person_2/img_01.png",
+      "falando": "img/person_2/img_01.png",
+      "cabeça baixa": "img/person_2/img_01.png",
+      "preocupado": "img/person_2/img_01.png",
+      "feliz": "img/person_2/img_01.png",
+      "falando feliz": "img/person_2/img_01.png",
+      "cabeça baixa calado": "img/person_2/img_01.png"
     },
     "cenas": {
       "inicioSessao": {
