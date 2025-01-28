@@ -1,5 +1,5 @@
 {    
-    "title": "João Gomes",
+    "title": "Valentina",
     "firstCena": "cena1",
     "firstTela": "cena",
     "imagens": {
@@ -15,13 +15,13 @@
         "cena1": {
             "dialogos": [
                 {
-                    "name": "João",
-                    "text": "Desculpe, cheguei no horário certo? Eu não posso me atrasar...",
+                    "name": "Psicólogo",
+                    "text": "Olá, Valentina Prazer em conhecê-la. Antes de começarmos, quero que saiba que este é um espaço seguro. Tudo o que conversarmos aqui ficará apenas entre nós. Se quiser, pode me contar um pouco sobre você e o que te trouxe até aqui. Sem pressa, no seu tempo.",
                     "imgPerson": "falando"
                 },
                 {
-                    "name": "Psicólogo",
-                    "text": "Fico feliz que tenha conseguido vir hoje, mesmo com as dificuldades. Como você está se sentindo agora?",
+                    "name": "Valentina",
+                    "text": "Eu nem sei por que estou aqui, para ser honesta. Quero dizer, eu já tentei terapia antes... Não funcionou. Mas, enfim, aqui estou. Mais uma tentativa inútil, certo?",
                     "imgPerson": "neutro"
                 },
                 {

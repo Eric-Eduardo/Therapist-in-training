@@ -1,4 +1,4 @@
-let histories = ["historia002.json", "historiaJoao.json"];
+let histories = ["historia002.json", "historiaJoao.json", "historiaValentina.json"];
 let jsonHistories = [];
 let actualImagesMap = null;
 let allImagesMap = [];
