@@ -23,6 +23,11 @@ let imagemFundo;
 let lastImagePerson;
 let pontuacao = 0;
 
+// Variáveis para controlar a animação
+let currentChar = 0; // Quantos caracteres do texto foram exibidos
+let isAnimating = false; // Indica se a animação está em progresso
+
+
 let mapButtons = new Map();
 
 //Funcao que carrega os valores das variaveis
@@ -42,7 +47,7 @@ function setup() {
     noLoop();
     // document.querySelector("canvas").style.height = "695px";
     widthTextBox[0] = width - positionTextBox[0] * 2;
-    
+
     // currentHistory = jsonHistories[0];
     // currentCena = currentHistory.firstCena;
     // tela = currentHistory.firstTela;
@@ -202,14 +207,13 @@ function showPerson(img, size) {
 
     // Desenha a imagem redimensionada
     image(img, 395, 76, newWidth, newHeight);
-} 
-
-// Mostra a caixa de diálogo
+}
 function showMessage(name, message) {
     rectMode(CORNER);
-    fill("#983f34DC"); // Cor de preenchimento da caixa
-    noStroke(); // Sem borda
-    rect(positionTextBox[0], positionTextBox[1], widthTextBox[0], widthTextBox[1], 20); // Caixa com bordas arredondadas
+    fill("#983f34DC");
+    noStroke();
+    rect(positionTextBox[0], positionTextBox[1], widthTextBox[0], widthTextBox[1], 20);
+
     textSize(20);
     fill("white");
     textAlign(LEFT, TOP);
@@ -218,30 +222,73 @@ function showMessage(name, message) {
     text(name, positionTextBox[0] + 30, positionTextBox[1] + 20);
     textStyle(NORMAL);
 
-    text(wrapText(message, widthTextBox[0] - 30 * 2), positionTextBox[0] + 30, positionTextBox[1] + 60);
+    let textoAtual = message.substring(0, currentChar); // Exibe o texto gradualmente
+    text(wrapText(textoAtual, widthTextBox[0] - 60), positionTextBox[0] + 30, positionTextBox[1] + 60);
 }
 
-// Carrega a cena (fundo, imagem do personagem e fala)
 function mostrarCena() {
     background(imagemFundo);
-    lastImagePerson = actualImagesMap.get(currentHistory.cenas[currentCena].dialogos[indiceTexto].imgPerson);
-    showPerson(lastImagePerson, 500);
-    showMessage(currentHistory.cenas[currentCena].dialogos[indiceTexto].name, currentHistory.cenas[currentCena].dialogos[indiceTexto].text);
 
-    // Botão para avançar
-    let action = () => {
-        indiceTexto++;
-        if (indiceTexto >= currentHistory.cenas[currentCena].dialogos.length) {
-            tela = currentHistory.cenas[currentCena].nextTela;
-            indiceTexto = 0;
-            let nextJump = currentHistory.cenas[currentCena].jump;
-            currentCena = currentHistory.cenas[nextJump] ? nextJump : currentCena;
-            currentMenu = currentHistory.menus[nextJump] ? nextJump : currentMenu;
-        }
+    lastImagePerson = actualImagesMap.get(currentHistory.cenas[currentCena].dialogos[indiceTexto].imgPerson);
+    const dialogoAtual = currentHistory.cenas[currentCena].dialogos[indiceTexto];
+    const textoCompleto = dialogoAtual.text;
+
+    showPerson(lastImagePerson, 500);
+    showMessage(dialogoAtual.name, textoCompleto);
+
+    // Inicia a animação automaticamente se estiver em uma nova frase
+    if (currentChar === 0 && !isAnimating) {
+        isAnimating = true;
+        animarTexto(textoCompleto, () => {
+            isAnimating = false;
+        });
     }
-    drawButton("Próximo", positionTextBox[0] + widthTextBox[0] - 90, positionTextBox[1] + widthTextBox[1] - 20, 150, 40, "#983f34", action);
+
+    // Botão "Próximo" habilitado após a animação ser concluída
+    let action = () => {
+        if (!isAnimating && currentChar >= textoCompleto.length) {
+            avancarDialogo();
+        }
+    };
+
+    drawButton(
+        "Próximo",
+        positionTextBox[0] + widthTextBox[0] - 90,
+        positionTextBox[1] + widthTextBox[1] - 20,
+        150,
+        40,
+        currentChar >= textoCompleto.length ? "#983f34" : "#ccc",
+        action
+    );
 }
 
+// Avança para o próximo diálogo automaticamente
+function avancarDialogo() {
+    indiceTexto++;
+    if (indiceTexto >= currentHistory.cenas[currentCena].dialogos.length) {
+        tela = currentHistory.cenas[currentCena].nextTela;
+        indiceTexto = 0;
+        let nextJump = currentHistory.cenas[currentCena].jump;
+        currentCena = currentHistory.cenas[nextJump] ? nextJump : currentCena;
+        currentMenu = currentHistory.menus[nextJump] ? nextJump : currentMenu;
+    }
+    currentChar = 0;
+    isAnimating = false;
+}
+
+// Função que anima o texto como se estivesse sendo digitado automaticamente
+function animarTexto(texto, callback) {
+    let frameRateTexto = 30; // Velocidade da digitação (letras por segundo)
+    let animacao = setInterval(() => {
+        if (currentChar <= texto.length) {
+            redraw();
+            currentChar++;
+        } else {
+            clearInterval(animacao);
+            if (callback) callback();
+        }
+    }, 1000 / frameRateTexto);
+}
 // Mostra o menu de opções
 function showMenu(menu) {
     let maxLineNumber = 0;
