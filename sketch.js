@@ -1,4 +1,4 @@
-let histories = ["historia002.json", "historiaJoao.json", "historiaValentina.json"];
+let histories = ["historiaJoao.json", "historiaValentina.json"];
 let jsonHistories = [];
 let actualImagesMap = null;
 let allImagesMap = [];
@@ -26,8 +26,7 @@ let pontuacao = 0;
 // Variáveis para controlar a animação
 let currentChar = 0; // Quantos caracteres do texto foram exibidos
 let isAnimating = false; // Indica se a animação está em progresso
-
-let respostas = {};
+let respostas = [];
 
 let mapButtons = new Map();
 
@@ -279,7 +278,7 @@ function avancarDialogo() {
 
 // Função que anima o texto como se estivesse sendo digitado automaticamente
 function animarTexto(texto, callback) {
-    let frameRateTexto = 60; // Velocidade da digitação (letras por segundo)
+    let frameRateTexto = 120; // Velocidade da digitação (letras por segundo)
     let animacao = setInterval(() => {
         if (currentChar <= texto.length) {
             redraw();
@@ -290,7 +289,7 @@ function animarTexto(texto, callback) {
         }
     }, 1000 / frameRateTexto);
 }
-// Mostra o menu de opções
+
 function showMenu(menu) {
     let maxLineNumber = 0;
     let textsize = 16;
@@ -333,16 +332,21 @@ function showMenu(menu) {
 
         // Adiciona clique para a opção
         addClickObject(xMenu + i * (widthMenu + gap), height / 2 - heightMenu / 2, xMenu + i * (widthMenu + gap) + widthMenu, height / 2 - heightMenu / 2 + heightMenu, () => {
-            // Registra o feedback associado ao menu
+            // Obtém texto e feedback da opção escolhida
             let opcaoEscolhida = currentHistory.menus[currentMenu].opcoes[i];
-            let pontuacaoEscolhida = opcaoEscolhida.pontuacao;
             let feedbackEscolhido = opcaoEscolhida.feedback;
+            let textoEscolhido = opcaoEscolhida.text;
 
-            respostas[currentMenu] = feedbackEscolhido; // Salva o feedback escolhido
-            console.log(`Resposta registrada no Menu ${currentMenu}: Feedback "${feedbackEscolhido}"`);
+            // Salva apenas texto e feedback
+            respostas.push({
+                text: textoEscolhido,
+                feedback: feedbackEscolhido
+            });
+
+            console.log(`Resposta registrada: Texto "${textoEscolhido}", Feedback "${feedbackEscolhido}"`);
 
             // Atualiza pontuação total e tela
-            pontuacao += pontuacaoEscolhida;
+            pontuacao += opcaoEscolhida.pontuacao;
             tela = opcaoEscolhida.nextTela;
 
             let nextJump = opcaoEscolhida.jump;
@@ -352,14 +356,15 @@ function showMenu(menu) {
     }
 }
 
-// Função para fornecer feedback com base nas escolhas
+
 function fornecerFeedback() {
     console.log("\nFeedback das escolhas:");
-    for (const [menu, feedback] of Object.entries(respostas)) {
-        console.log(`No Menu ${menu}, o feedback foi: "${feedback}"`);
+    for (const [text, feedback] of Object.entries(respostas)) {
+        console.log(`O texto escolhido foi: "${text}" e o feedback foi: "${feedback}"`);
     }
     console.log(respostas);
 }
+
 
 
 function mostrarCenaMenu() {
@@ -412,45 +417,119 @@ function mostrarTelaSelecaoFase() {
 
 
 }
+let mostrarFeedback = false; // Controla se o feedback está sendo mostrado
+let indiceFeedback = 0; // Índice do feedback atual
+
+
 function mostrarTelaFinal() {
-    background(imagemFundo); // Fundo bg_03.png
+    background(imagemFundo); // Fundo
 
     // Retângulo central para mostrar a pontuação
     rectMode(CENTER);
     fill(255, 200); // Cor branca semitransparente
-    rect(width / 2, height / 2, 500, 300, 20);
+    rect(width / 2, height / 2, 1000, 600, 20);
 
-    // Texto da pontuação
+    // Texto "Pontuação Final"
     textSize(32);
     fill(0); // Cor preta
     textAlign(CENTER, CENTER);
-    text("Pontuação Final", width / 2, height / 2 - 120);
-    textSize(48);
-    text(`${pontuacao}`, width / 2, height / 2 - 60);
+    text("Pontuação Final", width / 2, height / 2 - 150);
 
-    // Exibir feedback com base nas escolhas armazenadas em respostas
-    textSize(16);
+    // Pontuação
+    textSize(30);
     fill(0);
-    let feedbackY = height / 2; // Linha de início do feedback
-    for (let menu in respostas) {
-        let feedback = respostas[menu]; // Recupera o feedback armazenado
-        if (feedback) {
-            text(`Menu ${menu}: ${feedback}`, width / 2, feedbackY);
-            feedbackY += 20; // Pula uma linha
-        }
+    text(`${pontuacao}`, width / 2, height / 2 - 100);
+
+    if (!mostrarFeedback) {
+        // Botão para ver feedback
+        textSize(24);
+        fill(100);
+        text("Clique para ver o feedback", width / 2, height / 2 + 60);
+
+        // Adiciona clique no botão
+        addClickObject(
+            width / 2 - 150, // Posição x inicial
+            height / 2 + 40, // Posição y inicial
+            width / 2 + 150, // Posição x final
+            height / 2 + 80, // Posição y final
+            () => {
+                mostrarFeedback = true; // Inicia o feedback
+                indiceFeedback = 0; // Reseta o índice
+            }
+        );
+    } else {
+        mostrarFeedbackEscolhido(); // Mostra os textos escolhidos e o feedback
+    }
+}
+function mostrarFeedbackEscolhido() {
+    // Verifica se há feedbacks para mostrar
+    if (respostas.length === 0) {
+        textSize(24);
+        fill(0);
+        textAlign(CENTER, CENTER);
+        text("Nenhum feedback disponível.", width / 2, height / 2);
+        return;
     }
 
-    // Texto de reinício ou saída
-    textSize(24);
-    fill(100);
-    text("Clique para reiniciar", width / 2, feedbackY + 40);
+    let respostaAtual = respostas[indiceFeedback];
+    textSize(20);
+    fill(0);
+    textWrap(WORD);
 
-    addClickObject(width / 2 - 200, height / 2 - 150, width / 2 + 200, height / 2 + 150, () => {
-        tela = "inicio";
-        pontuacao = 0; // Reinicia a pontuação
-        indiceTexto = 0;
-        respostas = {}; // Reinicia as respostas
-    });
+    // Largura máxima para os textos
+    let larguraMaxima = 800;
+    let xInicio = (width - larguraMaxima + 180); // Calcula início centralizado
+
+    // Calcular altura do texto escolhido e feedback
+    let alturaTextoEscolhido = calcularAlturaTexto(`Texto escolhido: ${respostaAtual.text}`, larguraMaxima);
+    let alturaFeedback = calcularAlturaTexto(`Feedback: ${respostaAtual.feedback}`, larguraMaxima);
+
+    // Exibindo o texto escolhido
+    textAlign(LEFT, TOP);
+    text(`Texto escolhido: ${respostaAtual.text}`, xInicio, height / 2 - 100, larguraMaxima);
+
+    // Exibindo o feedback logo abaixo do texto escolhido
+    text(`Feedback: ${respostaAtual.feedback}`, xInicio, height / 2 - 100 + alturaTextoEscolhido + 20, larguraMaxima);
+
+    // Botão "Próximo" posicionado dinamicamente
+    let posBotaoY = height / 2 - 100 + alturaTextoEscolhido + alturaFeedback + 40;
+    textSize(16);
+    fill(100);
+    textAlign(CENTER, CENTER);
+    text("Próximo ➡", width / 2, posBotaoY);
+
+    // Adiciona clique no botão "Próximo"
+    addClickObject(
+        width / 2 - 50,
+        posBotaoY - 10,
+        width / 2 + 50,
+        posBotaoY + 10,
+        () => {
+            // Vai para o próximo feedback, ou retorna ao início
+            indiceFeedback = (indiceFeedback + 1) % respostas.length;
+        }
+    );
+}
+
+// Função para calcular a altura do texto
+function calcularAlturaTexto(texto, larguraMaxima) {
+    let palavras = texto.split(' ');
+    let linhas = [];
+    let linhaAtual = '';
+
+    for (let palavra of palavras) {
+        let larguraLinha = textWidth(linhaAtual + ' ' + palavra);
+        if (larguraLinha > larguraMaxima) {
+            linhas.push(linhaAtual);
+            linhaAtual = palavra; // Começa uma nova linha
+        } else {
+            linhaAtual += (linhaAtual === '' ? '' : ' ') + palavra;
+        }
+    }
+    linhas.push(linhaAtual); // Adiciona a última linha
+
+    // Altura total = número de linhas * tamanho do texto
+    return (linhas.length * textSize()) + 30;
 }
 
 function mousePressed() {
