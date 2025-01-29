@@ -229,13 +229,22 @@ function showMessage(name, message) {
 }
 
 function mostrarCena() {
-    background(imagemFundo);
-
-    lastImagePerson = actualImagesMap.get(currentHistory.cenas[currentCena].dialogos[indiceTexto].imgPerson);
+    background(imagemFundo); lastImagePerson = actualImagesMap.get(currentHistory.cenas[currentCena].dialogos[indiceTexto].imgPerson);
+    const dialogoAtual = currentHistory.cenas[currentCena].dialogos[indiceTexto];
+    const textoCompleto = dialogoAtual.text;
     showPerson(lastImagePerson, 900);
     showMessage(currentHistory.cenas[currentCena].dialogos[indiceTexto].name, currentHistory.cenas[currentCena].dialogos[indiceTexto].text);
 
-    // Botão para avançar
+
+    // Inicia a animação automaticamente se estiver em uma nova frase
+    if (currentChar === 0 && !isAnimating) {
+        isAnimating = true;
+        animarTexto(textoCompleto, () => {
+            isAnimating = false;
+        });
+    }
+
+    // Botão "Próximo" habilitado após a animação ser concluída
     let action = () => {
         if (!isAnimating && currentChar >= textoCompleto.length) {
             avancarDialogo();
