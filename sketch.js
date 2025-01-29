@@ -44,7 +44,7 @@ function preload() {
 function setup() {
     createCanvas(1280, 720);
     resizeWindow();
-    noLoop();
+    // noLoop();
     // document.querySelector("canvas").style.height = "695px";
     widthTextBox[0] = width - positionTextBox[0] * 2;
 
@@ -206,8 +206,10 @@ function showPerson(img, size) {
     let newHeight = newWidth * aspectRatio;
 
     // Desenha a imagem redimensionada
-    image(img, 395, 76, newWidth, newHeight);
+    image(img, width / 2 - newWidth / 2, 70, newWidth, newHeight);
 }
+
+// Mostra a caixa de diálogo
 function showMessage(name, message) {
     rectMode(CORNER);
     fill("#983f34DC");
@@ -230,21 +232,10 @@ function mostrarCena() {
     background(imagemFundo);
 
     lastImagePerson = actualImagesMap.get(currentHistory.cenas[currentCena].dialogos[indiceTexto].imgPerson);
-    const dialogoAtual = currentHistory.cenas[currentCena].dialogos[indiceTexto];
-    const textoCompleto = dialogoAtual.text;
+    showPerson(lastImagePerson, 900);
+    showMessage(currentHistory.cenas[currentCena].dialogos[indiceTexto].name, currentHistory.cenas[currentCena].dialogos[indiceTexto].text);
 
-    showPerson(lastImagePerson, 500);
-    showMessage(dialogoAtual.name, textoCompleto);
-
-    // Inicia a animação automaticamente se estiver em uma nova frase
-    if (currentChar === 0 && !isAnimating) {
-        isAnimating = true;
-        animarTexto(textoCompleto, () => {
-            isAnimating = false;
-        });
-    }
-
-    // Botão "Próximo" habilitado após a animação ser concluída
+    // Botão para avançar
     let action = () => {
         if (!isAnimating && currentChar >= textoCompleto.length) {
             avancarDialogo();
@@ -369,7 +360,7 @@ function fornecerFeedback() {
 
 function mostrarCenaMenu() {
     background(imagemFundo);
-    showPerson(lastImagePerson, 500);
+    showPerson(lastImagePerson, 900);
     showMenu(currentHistory.menus[currentMenu].opcoes);
 }
 
@@ -540,5 +531,5 @@ function mousePressed() {
         }
     })
 
-    redraw();
+    // redraw();
 }
