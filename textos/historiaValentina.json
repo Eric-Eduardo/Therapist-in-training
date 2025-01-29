@@ -5,13 +5,13 @@
   "pontuacaoMax": "8",
   "pontuacaoMin": "-4",
   "imagens": {
-    "neutro": "img/joao/joao_01.png",
-    "falando": "img/joao/joao_02.png",
-    "cabeça baixa": "img/joao/joao_03.png",
-    "preocupado": "img/joao/joao_04.png",
-    "feliz": "img/joao/joao_07.png",
-    "falando feliz": "img/joao/joao_06.png",
-    "cabeça baixa calado": "img/joao/joao_05.png"
+    "neutro": "img/valentina/valentina_01.png",
+    "falando defensiva": "img/valentina/valentina_04.png",
+    "falando seria": "img/valentina/valentina_05.png",
+    "brava": "img/valentina/valentina_02.png",
+    "falando abertamente": "img/valentina/valentina_07.png",
+    "triste": "img/valentina/valentina_06.png",
+    "brava falando": "img/valentina/valentina_03.png"
   },
   "cenas": {
     "cena1": {
@@ -19,12 +19,12 @@
         {
           "name": "Psicólogo",
           "text": "Olá, Valentina Prazer em conhecê-la. Antes de começarmos, quero que saiba que este é um espaço seguro. Tudo o que conversarmos aqui ficará apenas entre nós. Se quiser, pode me contar um pouco sobre você e o que te trouxe até aqui. Sem pressa, no seu tempo.",
-          "imgPerson": "falando"
+          "imgPerson": "neutro"
         },
         {
           "name": "Valentina",
           "text": "Eu nem sei por que estou aqui, para ser honesta. Quero dizer, eu já tentei terapia antes... Não funcionou. Mas, enfim, aqui estou. Mais uma tentativa inútil, certo?",
-          "imgPerson": "neutro"
+          "imgPerson": "falando defensiva"
         }
       ],
       "nextTela": "cenaMenu",
@@ -33,19 +33,14 @@
     "cena2": {
       "dialogos": [
         {
-          "name": "João",
-          "text": "Meu nome é João, tenho 29 anos. Eu trabalho como analista de sistemas em uma empresa de tecnologia, mas, ultimamente, as coisas não têm ido muito bem.",
-          "imgPerson": "falando"
+          "name": "Valentina",
+          "text": "Bom... Na verdade, não é como se eu tivesse muitas opções. Eu me sinto... perdida, sabe? Mas ao mesmo tempo, é como se eu já soubesse como tudo vai acabar: um desastre. É sempre assim comigo.",
+          "imgPerson": "falando defensiva"
         },
         {
-          "name": "João",
-          "text": "Sinto que o trabalho tem me consumido, e em casa também não tem sido fácil... minha relação com minha família está tensa, e isso só aumenta minha ansiedade.",
-          "imgPerson": "cabeça baixa"
-        },
-        {
-          "name": "João",
-          "text": "Sinto que o trabalho tem me consumido, e em casa também não tem sido fácil... minha relação com minha família está tensa, e isso só aumenta minha ansiedade.",
-          "imgPerson": "preocupado"
+          "name": "Valentina",
+          "text": "Eu começo algo, aí faço tudo errado, e no fim estou pior do que antes.",
+          "imgPerson": "falando seria"
         }
       ],
       "nextTela": "cenaMenu",
@@ -91,9 +86,9 @@
     "cena5": {
       "dialogos": [
         {
-          "name": "João",
-          "text": "É, talvez você tenha razão. Eu... não queria parecer fraco, eu acho. Mas tem sido difícil, não sei mais como lidar com tudo.",
-          "imgPerson": "cabeça baixa"
+          "name": "Valentina",
+          "text": "Eu acho que... o problema sou eu. Eu sempre tento, mas nunca é o suficiente. Mesmo quando parece que tudo está indo bem, eu acabo errando, ou deixando algo escapar. É como se eu fosse o elo fraco de tudo. Talvez eu só não seja boa o bastante.",
+          "imgPerson": "triste"
         }
       ],
       "nextTela": "cenaMenu",
@@ -139,38 +134,18 @@
     "cena8": {
       "dialogos": [
         {
-          "name": "João",
-          "text": "É... eu entendo, talvez eu só precise ser mais organizado. Mas ainda não sei se isso vai resolver tudo...",
-          "imgPerson": "falando"
+          "name": "Valentina",
+          "text": "Eu... talvez. Quer dizer, faz sentido. Tem coisas que realmente não estão sob o meu controle, mas, mesmo assim, eu não consigo evitar de me sentir responsável. ",
+          "imgPerson": "falando defensiva"
         },
         {
-          "name": "Psicólogo",
-          "text": "É isso mesmo, João. Como já mencionei, todos têm responsabilidades e pressões. A chave está em se organizar, priorizar e aprender a lidar com essas demandas.",
-          "imgPerson": "neutro"
-        },
-        {
-          "name": "Psicólogo",
-          "text": "Às vezes, a solução está em dar um passo atrás e ver o que realmente precisa de sua atenção. Isso vai melhorar conforme você ajusta sua abordagem ao trabalho.",
-          "imgPerson": "neutro"
-        },
-        {
-          "name": "João",
-          "text": "Entendi. Vou tentar... espero que ajude.",
-          "imgPerson": "falando"
-        },
-        {
-          "name": "Psicólogo",
-          "text": "Bom, João, espero que você consiga encontrar uma forma de se organizar e lidar com essas pressões. Não hesite em procurar ajuda caso precise.",
-          "imgPerson": "neutro"
-        },
-        {
-          "name": "Psicólogo",
-          "text": "Até a próxima!",
-          "imgPerson": "neutro"
+          "name": "Valentina",
+          "text": "É como se, no fundo, eu sempre achasse que poderia ter feito algo diferente. Talvez se eu tivesse tentado mais, ou pensado melhor, as coisas não teriam dado errado... Mas... talvez você tenha razão. Eu só não sei como parar de pensar assim. Parece tão automático, sabe? Como se estivesse gravado em mim. Se eu não sou a culpada, então... por onde eu começo a mudar isso?",
+          "imgPerson": "falando abertamente"
         }
       ],
-      "nextTela": "inicio",
-      "jump": ""
+      "nextTela": "cenaMenu",
+      "jump": "menu4"
     },
     "cena9": {
       "dialogos": [
@@ -325,6 +300,22 @@
       ],
       "nextTela": "final",
       "jump": ""
+    },
+    "cena13": {
+      "dialogos": [
+        {
+          "name": "Valentina",
+          "text": "Talvez você esteja certo. Acho que tem muita coisa aqui dentro que eu ainda não entendi direito. Isso me dá alguma esperança de que talvez eu consiga mudar... se eu conseguir entender o que está me segurando.",
+          "imgPerson": "neutro"
+        },
+        {
+          "name": "Valentina",
+          "text": "Obrigada por me ouvir hoje. Vou pensar mais nisso e... espero que a gente possa continuar essa conversa na próxima sessão.",
+          "imgPerson": "falando abertamente"
+        }
+      ],
+      "nextTela": "final",
+      "jump": ""
     }
   },
   "menus": {
@@ -335,7 +326,7 @@
           "pontuacao": 2,
           "nextTela": "cena",
           "jump": "cena2",
-          "feedback": "..."
+          "feedback": "É uma ótima abordagem, válida os sentimentos e reconhece as dificuldades da situação, podendo aliviar um peso emocional e criar um ambiente seguro."
         },
         {
           "text": "Pode ser que a terapia não esteja funcionando porque você não está se esforçando o suficiente para mudar.",
@@ -363,64 +354,96 @@
     "menu2": {
       "opcoes": [
         {
-          "text": "Bom, isso é comum. Todo mundo tem pressões no trabalho. Acho que você só precisa aprender a lidar melhor com isso. A vida é cheia de responsabilidades, e todos nós precisamos aprender a administrar.",
-          "pontuacao": -1,
-          "nextTela": "cena",
-          "jump": "cena5",
-          "feedback": "..."
-        },
-        {
-          "text": "Eu posso ver como isso deve estar sendo muito desafiador para você. Parece que essa pressão toda está tirando seu equilíbrio. É normal que, quando estamos sobrecarregados, nossa mente fique em um ciclo, repetindo os mesmos pensamentos. Você consegue perceber em que momentos do dia esse estresse parece ser mais forte? Ou talvez, como ele afeta seu descanso e a forma como você se relaciona com outras pessoas?",
+          "text": "Você sente que está presa nesse ciclo, mas talvez possamos entender melhor por que ele acontece. O que você acha que esta errado?",
           "pontuacao": 2,
           "nextTela": "cena",
-          "jump": "cena6",
-          "feedback": "..."
+          "jump": "cena5",
+          "feedback": "Ótima abordagem. Muito acolhedora e empática, ela válida os sentimentos do pacientes."
         },
         {
-          "text": "Entendo, João. Parece que o trabalho tem realmente tomado muito espaço na sua vida. O medo de errar e a sensação de urgência podem ser muito difíceis de lidar. Além disso, a dificuldade para dormir é uma resposta comum quando estamos sobrecarregados. Eu gostaria de saber mais sobre como isso afeta outras áreas da sua vida. Você tem sentido que o trabalho tem influenciado suas relações pessoais ou até seu tempo para si mesmo?",
+          "text": "Por que você acha que as coisas sempre acabam assim? Existe algo específico que sempre acontece ou parece ser mais sobre como você se sente no final?",
           "pontuacao": 1,
           "nextTela": "cena",
           "jump": "cena6",
-          "feedback": "..."
+          "feedback": "É uma boa abordagem, não apenas válida os sentimentos mas também convida a pessoa a se expressar de maneira mais aberta."
         },
         {
-          "text": "Parece que você está vivendo com um nível muito alto de pressão e medo de falhar, João. Como isso te faz se sentir no dia a dia? Você tem experimentado ansiedade ou medo constante, ou há momentos em que isso diminui?",
-          "pontuacao": 0,
+          "text": "Talvez você não esteja tentando o suficiente",
+          "pontuacao": -1,
+          "nextTela": "cena",
+          "jump": "cena6",
+          "feedback": "Esse tipo de comentário que pode deixar o paciente desconfortável ou invalidar seus esforços."
+        },
+        {
+          "text": "Talvez você precise mudar sua abordagem. Se sempre acaba em desastre, por que não tentar fazer as coisas de forma diferente?",
+          "pontuacao": -1,
           "nextTela": "cena",
           "jump": "cena7",
-          "feedback": "..."
+          "feedback": "Pode fazer com que a paciente sinta que suas tentativas não são válidas."
         }
       ]
     },
     "menu3": {
       "opcoes": [
         {
-          "text": "Todo mundo tem responsabilidades e pressões. Você só precisa se organizar melhor e gerenciar melhor o tempo. Isso vai passar quando você aprender a lidar com as demandas do trabalho.",
+          "text": "Será que você não está se culpando por coisas que não têm nada a ver com você? Às vezes, as coisas dão errado por razões que ninguém pode controlar.",
+          "pontuacao": 0,
+          "nextTela": "cena",
+          "jump": "cena13",
+          "feedback": "Ao fazer esse comentário, o paciente irá se sentir acolhido e confortável para compartilhar seus sentimentos de uma forma mais acolhedora."
+        },
+        {
+          "text": "Talvez você esteja pensando demais sobre tudo isso. Será que não está criando problemas onde eles não existem?",
           "pontuacao": -1,
           "nextTela": "cena",
-          "jump": "cena8",
-          "feedback": "skdkamsd"
+          "jump": "cena9",
+          "feedback": "A frase tenta trazer uma reflexão sobre os pensamentos excessivos, mas a maneira como é expressa pode soar um pouco crítica ou invalidante, especialmente ao questionar se 'está criando problemas onde não existem'. Isso pode fazer a pessoa sentir que seus sentimentos estão sendo minimizados ou desconsiderados."
         },
         {
-          "text": "Eu entendo como isso pode ser difícil, João. É normal se sentir sobrecarregado quando as responsabilidades começam a pesar tanto. Mas não é sobre ser fraco. Às vezes, precisamos de um espaço para conversar sobre o que estamos vivendo para poder lidar com isso de forma mais saudável. Você não está sozinho nisso.",
+          "text": "Se você acha que é o problema, talvez precise aceitar que nem todo mundo é capaz de fazer as coisas direito. Não é ruim admitir isso.",
+          "pontuacao": -2,
+          "nextTela": "cena",
+          "jump": "cena10",
+          "feedback": "Fazer com que o paciente pense nos seus erros o deixe sobrecarregado e sob pressão. "
+        },
+        {
+          "text": "Talvez o problema não seja você, mas sim a forma como você percebe as coisas quando algo dá errado. Vamos tentar entender melhor essas situações?",
           "pontuacao": 1,
           "nextTela": "cena",
-          "jump": "cena9",
-          "feedback": "..."
+          "jump": "cena11",
+          "feedback": "Empático e generoso, gerando um ambiente seguro e confortável."
+        }
+      ]
+    },
+    "menu4": {
+      "opcoes": [
+        {
+          "text": "Você sente que carrega uma culpa desnecessária, Valentina. Talvez possamos explorar o que está por trás disso e entender melhor como lidar com esses sentimentos.",
+          "pontuacao": 1,
+          "nextTela": "cena",
+          "jump": "cena8",
+          "feedback": "A frase demonstra uma tentativa de acolher e explorar os sentimentos de Valentina sem pressioná-la. Ao usar a expressão 'carrega uma culpa desnecessária', ela pode ser compreendida como uma tentativa de desafiar o sentimento de culpa de forma construtiva. A sugestão de explorar o que está por trás desse sentimento e buscar formas de lidar com ele oferece um espaço para reflexão, sem desconsiderar os sentimentos da paciente. Esse tipo de abordagem pode ser eficaz para iniciar uma conversa mais profunda e empática sobre a experiência emocional dela."
         },
         {
-          "text": "Eu entendo que seja difícil, mas talvez uma lista de tarefas e um cronograma de prioridades possam ajudar a aliviar um pouco da pressão. Você já tentou organizar suas tarefas dessa forma? Isso pode tornar as coisas mais gerenciáveis.",
+          "text": "Você sente que nunca é suficiente. Será que essas expectativas que você tem de si mesma não estão muito altas?",
+          "pontuacao": -1,
+          "nextTela": "cena",
+          "jump": "cena9",
+          "feedback": "Esse tipo de comentário pode ser confuso 'será que essas expectativas que você tem de si mesma não estão muito altas?' minimiza os esforços e as expectativas do paciente."
+        },
+        {
+          "text": "Parece que você carrega muito peso em seus ombros, mas ninguém pode controlar tudo. O que acha de começarmos a focar no que está ao seu alcance mudar?",
           "pontuacao": 1,
           "nextTela": "cena",
           "jump": "cena10",
-          "feedback": "asdasd"
+          "feedback": "A frase é empática e oferece uma perspectiva positiva, ao reconhecer o peso que a pessoa sente e sugerir um foco no que pode ser controlado. Ao dizer 'ninguém pode controlar tudo', a frase valida o sentimento de sobrecarga e promove uma sensação de compreensão. A proposta de focar no que está ao alcance é uma boa maneira de encorajar a pessoa a tomar ações dentro do que é possível. Esse tipo de abordagem ajuda a pessoa a sentir que pode dar pequenos passos sem a pressão de tentar resolver tudo de uma vez."
         },
         {
-          "text": "Isso soa realmente desafiador. Parece que você está lidando com muita pressão, João. Quero ouvir mais sobre como está afetando você. O que você sente quando pensa sobre essas responsabilidades? Vamos explorar isso juntos.",
-          "pontuacao": 0,
+          "text": "Pode ser que você esteja realmente contribuindo para esses problemas, mesmo sem perceber. Já pensou nisso?",
+          "pontuacao": -1,
           "nextTela": "cena",
           "jump": "cena11",
-          "feedback": "..."
+          "feedback": "A frase tenta convidar a pessoa a refletir sobre sua responsabilidade pelos problemas, mas pode ser interpretada de forma um pouco acusatória. A expressão 'realmente contribuindo para esses problemas' pode fazer a pessoa se sentir julgada ou culpada, o que pode gerar resistência ou desconforto."
         }
       ]
     }
