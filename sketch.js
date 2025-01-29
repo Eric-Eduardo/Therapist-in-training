@@ -505,8 +505,14 @@ function mostrarFeedbackEscolhido() {
         width / 2 + 50,
         posBotaoY + 10,
         () => {
-            // Vai para o próximo feedback, ou retorna ao início
-            indiceFeedback = (indiceFeedback + 1) % respostas.length;
+            // Verifica se o índice chegou ao fim da lista de respostas
+            if (indiceFeedback + 1 >= respostas.length) {
+                // Chama a função para mostrar o menu
+                tela = "selecaoFase";
+            } else {
+                // Vai para o próximo feedback
+                indiceFeedback = (indiceFeedback + 1) % respostas.length;
+            }
         }
     );
 }
