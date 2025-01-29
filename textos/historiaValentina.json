@@ -2,6 +2,8 @@
   "title": "Valentina",
   "firstCena": "cena1",
   "firstTela": "cena",
+  "pontuacaoMax": "8",
+  "pontuacaoMin": "-4",
   "imagens": {
     "neutro": "img/joao/joao_01.png",
     "falando": "img/joao/joao_02.png",
