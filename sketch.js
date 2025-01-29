@@ -3,8 +3,8 @@ let jsonHistories = [];
 let actualImagesMap = null;
 let allImagesMap = [];
 
-let currentCena = "cena1"; // cena atual
-let currentMenu = "menu2";
+let currentCena = ""; // cena atual
+let currentMenu = "";
 
 let currentHistory = null;
 
