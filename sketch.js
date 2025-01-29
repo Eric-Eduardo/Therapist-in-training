@@ -486,10 +486,10 @@ function mostrarFeedbackEscolhido() {
 
     // Exibindo o texto escolhido
     textAlign(LEFT, TOP);
-    text(`Texto escolhido: ${respostaAtual.text}`, xInicio, height / 2 - 100, larguraMaxima);
+    text(`Texto escolhido: ${respostaAtual.text}`, xInicio, height / 2 - 70, larguraMaxima + 20);
 
     // Exibindo o feedback logo abaixo do texto escolhido
-    text(`Feedback: ${respostaAtual.feedback}`, xInicio, height / 2 - 100 + alturaTextoEscolhido + 20, larguraMaxima);
+    text(`Feedback: ${respostaAtual.feedback}`, xInicio, height / 2 - 70 + alturaTextoEscolhido + 20, larguraMaxima + 20);
 
     // Botão "Próximo" posicionado dinamicamente
     let posBotaoY = height / 2 - 100 + alturaTextoEscolhido + alturaFeedback + 40;

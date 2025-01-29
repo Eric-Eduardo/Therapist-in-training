@@ -2,6 +2,8 @@
   "title": "João Gomes",
   "firstCena": "cena1",
   "firstTela": "cena",
+  "pontuacaoMax": "5",
+  "pontuacaoMin": "-3",
   "imagens": {
     "neutro": "img/joao/joao_01.png",
     "falando": "img/joao/joao_02.png",
