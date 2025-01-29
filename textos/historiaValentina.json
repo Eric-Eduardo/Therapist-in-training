@@ -11,7 +11,7 @@
     "brava": "img/valentina/valentina_02.png",
     "falando abertamente": "img/valentina/valentina_07.png",
     "triste": "img/valentina/valentina_06.png",
-    "brava falando": "img/valentina/valentina_03.png"
+    "falando brava": "img/valentina/valentina_03.png"
   },
   "cenas": {
     "cena1": {
@@ -150,23 +150,13 @@
     "cena9": {
       "dialogos": [
         {
-          "name": "João",
-          "text": "Eu realmente me senti perdido com tudo isso... não sabia nem como começar a falar. Mas é bom saber que não estou sozinho.",
-          "imgPerson": "falando feliz"
-        },
-        {
-          "name": "Psicólogo",
-          "text": "Você fez muito bem em começar essa conversa, João. Às vezes, só precisamos de alguém para ouvir e ajudar a organizar nossos pensamentos.",
-          "imgPerson": "feliz"
-        },
-        {
-          "name": "Psicólogo",
-          "text": "Fico feliz que tenha se aberto.Isso é um passo importante para lidar com tudo o que está pesando sobre você.",
-          "imgPerson": "feliz"
+          "name": "Valentina",
+          "text": "Talvez... talvez você tenha razão. Mas como eu posso não me cobrar tanto? Se eu não fizer isso, quem vai? No fim, parece que tudo depende de mim.",
+          "imgPerson": "falando defensiva"
         }
       ],
-      "nextTela": "cena",
-      "jump": "cena12"
+      "nextTela": "cenaMenu",
+      "jump": "menu5"
     },
     "cena10": {
       "dialogos": [
@@ -316,6 +306,128 @@
       ],
       "nextTela": "final",
       "jump": ""
+    },
+    "cena14": {
+      "dialogos": [
+        {
+          "name": "Valentina",
+          "text": "Pensando demais...? Talvez... Talvez eu realmente complique as coisas, mas, honestamente, isso não ajuda muito. Se fosse tão simples parar de pensar, eu já teria feito.",
+          "imgPerson": "falando brava"
+        },
+        {
+          "name": "Valentina",
+          "text": "Bom, acho que isso é algo que preciso resolver sozinha. Obrigada pelo tempo. Até mais.",
+          "imgPerson": "falando brava"
+        }
+      ],
+      "nextTela": "final",
+      "jump": ""
+    },
+    "cena15": {
+      "dialogos": [
+        {
+          "name": "Valentina",
+          "text": "Talvez você tenha razão. Eu me coloco em situações que estão fora do meu controle e espero demais de mim mesma. Mas... não é fácil saber por onde começar a mudar isso. Acho que é um passo de cada vez, né?",
+          "imgPerson": "falando abertamente"
+        },
+        {
+          "name": "Valentina",
+          "text": "Obrigada por hoje. Vou tentar pensar em uma coisa pequena que posso começar a mudar e... a gente vê como continuar na próxima.",
+          "imgPerson": "falando abertamente"
+        }
+      ],
+      "nextTela": "final",
+      "jump": ""
+    },
+    "cena16": {
+      "dialogos": [
+        {
+          "name": "Valentina",
+          "text": "Contribuindo...? Então, no fim, é mesmo culpa minha. Era o que eu já imaginava...",
+          "imgPerson": "falando brava"
+        },
+        {
+          "name": "Valentina",
+          "text": "Bom, acho que já deu por hoje. Obrigada pelo tempo, mas... não sei se faz sentido eu continuar vindo aqui.",
+          "imgPerson": "falando brava"
+        }
+      ],
+      "nextTela": "final",
+      "jump": ""
+    },
+    "cena17": {
+      "dialogos": [
+        {
+          "name": "Valentina",
+          "text": "Dividir o peso... parece tão simples, mas eu não sei como fazer isso. Toda vez que eu tento, fico com medo de que as coisas saiam errado porque outra pessoa não vai fazer direito. Então eu acabo assumindo tudo sozinha, mesmo que isso me deixe exausta.",
+          "imgPerson": "falando defensiva"
+        },
+        {
+          "name": "Valentina",
+          "text": "Eu nunca pensei muito nisso... dividir responsabilidades. Sempre parece mais seguro fazer tudo sozinha, mesmo que seja cansativo. Talvez seja isso que esteja me prendendo, mas... não é fácil confiar nos outros assim.",
+          "imgPerson": "falando defensiva"
+        },
+        {
+          "name": "Valentina",
+          "text": "Talvez seja algo que eu possa trabalhar com o tempo, sabe? Vou pensar mais nisso, e quem sabe da próxima vez eu já consiga ter algo para compartilhar. Por hoje, acho que preciso digerir tudo isso. Obrigada pela conversa.",
+          "imgPerson": "falando defensiva"
+        }
+      ],
+      "nextTela": "final",
+      "jump": ""
+    },
+    "cena18": {
+      "dialogos": [
+        {
+          "name": "Valentina",
+          "text": "Medo de falhar... talvez seja isso. Acho que, desde criança, eu sentia que precisava ser perfeita. Que qualquer erro era uma prova de que eu não era boa o suficiente. É como se esse medo tivesse ficado comigo até hoje.",
+          "imgPerson": "falando abertamente"
+        },
+        {
+          "name": "Valentina",
+          "text": "Você sabe, é estranho pensar que tanto do que eu sinto hoje pode estar ligado a coisas que aconteceram lá atrás. Mas faz sentido... Acho que preciso olhar para isso com mais atenção. Eu vou tentar refletir sobre isso até nossa próxima sessão. Por hoje, sinto que já foi um grande passo.",
+          "imgPerson": "falando abertamente"
+        },
+        {
+          "name": "Valentina",
+          "text": "Obrigada por me ouvir. Acho que isso já me ajuda mais do que eu imaginava.",
+          "imgPerson": "falando abertamente"
+        }
+      ],
+      "nextTela": "final",
+      "jump": ""
+    },
+    "cena19": {
+      "dialogos": [
+        {
+          "name": "Valentina",
+          "text": "Exagerando? Talvez você esteja certo, mas... é fácil falar isso quando você não sente que tudo depende de você. Não é que eu ache que sou perfeita, mas... eu só não sei como lidar com os erros sem me culpar.",
+          "imgPerson": "falando brava"
+        },
+        {
+          "name": "Valentina",
+          "text": "Eu acho que já foi o suficiente por hoje. Talvez eu precise pensar se essa abordagem vai funcionar pra mim. De qualquer forma, obrigada pelo tempo.",
+          "imgPerson": "falando brava"
+        }
+      ],
+      "nextTela": "final",
+      "jump": ""
+    },
+    "cena20": {
+      "dialogos": [
+        {
+          "name": "Valentina",
+          "text": "Contribuindo...? Então, no fim, é mesmo culpa minha. Era o que eu já imaginava...",
+          "imgPerson": "falando brava"
+        },
+        {
+          "name": "Valentina",
+          "text": "Bom, acho que já deu por hoje. Obrigada pelo tempo, mas... não sei se faz sentido eu continuar vindo aqui.",
+          "imgPerson": "falando brava"
+        }
+      ],
+      "nextTela": "final",
+      "jump": ""
     }
   },
   "menus": {
@@ -396,21 +508,21 @@
           "text": "Talvez você esteja pensando demais sobre tudo isso. Será que não está criando problemas onde eles não existem?",
           "pontuacao": -1,
           "nextTela": "cena",
-          "jump": "cena9",
+          "jump": "cena14",
           "feedback": "A frase tenta trazer uma reflexão sobre os pensamentos excessivos, mas a maneira como é expressa pode soar um pouco crítica ou invalidante, especialmente ao questionar se 'está criando problemas onde não existem'. Isso pode fazer a pessoa sentir que seus sentimentos estão sendo minimizados ou desconsiderados."
         },
         {
           "text": "Se você acha que é o problema, talvez precise aceitar que nem todo mundo é capaz de fazer as coisas direito. Não é ruim admitir isso.",
-          "pontuacao": -2,
+          "pontuacao": 1,
           "nextTela": "cena",
-          "jump": "cena10",
+          "jump": "cena15",
           "feedback": "Fazer com que o paciente pense nos seus erros o deixe sobrecarregado e sob pressão. "
         },
         {
           "text": "Talvez o problema não seja você, mas sim a forma como você percebe as coisas quando algo dá errado. Vamos tentar entender melhor essas situações?",
-          "pontuacao": 1,
+          "pontuacao": -1,
           "nextTela": "cena",
-          "jump": "cena11",
+          "jump": "cena16",
           "feedback": "Empático e generoso, gerando um ambiente seguro e confortável."
         }
       ]
@@ -444,6 +556,38 @@
           "nextTela": "cena",
           "jump": "cena11",
           "feedback": "A frase tenta convidar a pessoa a refletir sobre sua responsabilidade pelos problemas, mas pode ser interpretada de forma um pouco acusatória. A expressão 'realmente contribuindo para esses problemas' pode fazer a pessoa se sentir julgada ou culpada, o que pode gerar resistência ou desconforto."
+        }
+      ]
+    },
+    "menu5": {
+      "opcoes": [
+        {
+          "text": "Se você sente que tudo depende de você, isso pode ser sinal de que está assumindo responsabilidades demais. Talvez seja hora de dividir esse peso com outras pessoas.",
+          "pontuacao": 1,
+          "nextTela": "cena",
+          "jump": "cena17",
+          "feedback": "A frase apresenta uma reflexão válida sobre o fardo de assumir responsabilidades excessivas, com um toque acolhedor ao sugerir dividir o peso com outros. A abordagem não é acusatória e oferece uma solução prática e empática, o que ajuda a pessoa a se sentir compreendida e apoiada. "
+        },
+        {
+          "text": "Essa cobrança que você sente, Valentina, parece vir de um medo de falhar. Será que podemos explorar de onde vem esse medo?",
+          "pontuacao": 2,
+          "nextTela": "cena",
+          "jump": "cena18",
+          "feedback": "A frase oferece uma abordagem empática ao reconhecer a cobrança que Valentina sente e sugerir que ela pode estar relacionada a um medo de falhar. A ideia de explorar a origem desse medo de maneira aberta é excelente, pois dá espaço para Valentina refletir e entender melhor seus sentimentos."
+        },
+        {
+          "text": "É possível que você esteja se cobrando demais. Ninguém espera perfeição o tempo todo, mas reconhecer os erros faz parte do processo de aprendizado.",
+          "pontuacao": 1,
+          "nextTela": "cena",
+          "jump": "cena18",
+          "feedback": "A frase oferece uma abordagem mais acolhedora e reflexiva, sem minimizar os sentimentos da pessoa. Ao sugerir que ela pode estar se cobrando demais, a frase abre espaço para a pessoa refletir sobre suas próprias expectativas sem julgá-la. A ideia de que 'reconhecer os erros faz parte do processo de aprendizado' é uma forma positiva de encorajar a autocompreensão, ressaltando o crescimento a partir das falhas.  "
+        },
+        {
+          "text": "Talvez você esteja exagerando um pouco. Ninguém espera que você seja perfeita o tempo todo, mas é importante que você reconheça seus erros.",
+          "pontuacao": -1,
+          "nextTela": "cena",
+          "jump": "cena19",
+          "feedback": "A frase tenta trazer uma reflexão importante sobre a perfeição e a necessidade de reconhecer erros, mas o uso da expressão 'Talvez você esteja exagerando um pouco' pode ser interpretado como minimização dos sentimentos da pessoa. Isso pode fazer com que ela se sinta invalidada ou incompreendida."
         }
       ]
     }
